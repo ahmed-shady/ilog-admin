@@ -18,6 +18,9 @@ export default interface Doctor{
     verified: boolean,
     verifiedById?: number,
     identity: Identity,
-    user: User
+    email: string,
+    emailVerified: boolean,
+    suspended: boolean,
+    profileImage: string
 
 }

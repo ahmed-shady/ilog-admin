@@ -1,6 +1,6 @@
 import { Badge, Button, ButtonGroup, Card, Dropdown, DropdownButton, Modal, Table } from 'react-bootstrap';
 import './Doctors.scss'
-import { act, useEffect, useState } from 'react';
+import { act, useEffect, useRef, useState } from 'react';
 import { Loading } from '@app/components/loading/Loading';
 
 import { listDoctors, unverifyDoctor, verifyDoctor } from '@app/api/DoctorsService';
@@ -31,6 +31,8 @@ const Doctors = () => {
   const [isLoading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
 
+  const [showFilters, setShowFilters] = useState(false);
+
   const closeAllModals = () => {
     setCurrentDoctor(null);
     setshowConfirmModal(false);
@@ -55,12 +57,12 @@ const Doctors = () => {
     setCurrentDoctor(doctor);
 
     try {
-      if (doctor.user.suspended)
-        await unsuspendUser(doctor.user.id);
+      if (doctor.suspended)
+        await unsuspendUser(doctor.id);
       else
-        await suspendUser(doctor.user.id);
-      
-      doctor.user.suspended = !doctor.user.suspended;
+        await suspendUser(doctor.id);
+
+      doctor.suspended = !doctor.suspended;
 
     } catch (error) {
     }
@@ -165,10 +167,10 @@ const Doctors = () => {
             <tbody>
 
               {doctors.map((doctor, idx) => (
-                <tr className={`text-center ${doctor?.user.suspended ? 'doctor-suspended' : ''}`} key={idx}>
+                <tr className={`text-center ${doctor?.suspended ? 'doctor-suspended' : ''}`} key={idx}>
                   <th className="text-center" scope="row">{idx}</th>
-                  <td className="text-cener">{doctor.user.name}</td>
-                  <td className="text-cener">{doctor.user.email}</td>
+                  <td className="text-cener">{doctor.name}</td>
+                  <td className="text-cener">{doctor.email}</td>
                   <td className="text-center">{DOCTOR_TYPES_TEXT[doctor.type]}</td>
                   {/* <td className='text-center'>{doctor.identity?.id || "unknown"}</td>
             <td className='text-center'>{doctor.phoneNumber}</td> */}
@@ -192,7 +194,7 @@ const Doctors = () => {
                         :
                         <DropdownButton size="sm" as={ButtonGroup} title="" id="bg-nested-dropdown">
                           <Dropdown.Item eventKey="1" className="dropdown-item" onClick={() => toggleVerify(doctor)}>{doctor.verified ? 'UnVerify' : 'Verify'}</Dropdown.Item>
-                          <Dropdown.Item eventKey="2" className="dropdown-item" onClick={() => { toggleSuspend(doctor) }}>{doctor.user.suspended ? 'UnSuspend' : 'Suspend'}</Dropdown.Item>
+                          <Dropdown.Item eventKey="2" className="dropdown-item" onClick={() => { toggleSuspend(doctor) }}>{doctor.suspended ? 'UnSuspend' : 'Suspend'}</Dropdown.Item>
                           <Dropdown.Item eventKey="2" className="dropdown-item" onClick={() => { initiateDelete(doctor) }}>Delete</Dropdown.Item>
                         </DropdownButton>
                       }
