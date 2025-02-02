@@ -39,6 +39,11 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-user-md nav-icon',
     path: '/doctors',
   },
+  {
+    name: i18n.t('menusidebar.label.messages'),
+    icon: 'fas fa-envelope nav-icon',
+    path: '/contactus-messages',
+  },
   // {
   //   name: i18n.t('menusidebar.label.mainMenu'),
   //   icon: 'far fa-caret-square-down nav-icon',
