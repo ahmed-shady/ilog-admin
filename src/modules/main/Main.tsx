@@ -5,7 +5,6 @@ import {
   removeWindowClass,
   scrollbarVisible,
 } from '@app/utils/helpers';
-import ControlSidebar from '@app/modules/main/control-sidebar/ControlSidebar';
 import Header from '@app/modules/main/header/Header';
 import Footer from '@app/modules/main/footer/Footer';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
@@ -75,11 +74,11 @@ const Main = () => {
   }, [screenSize, menuSidebarCollapsed]);
 
   useEffect(() => {
-    if (controlSidebarCollapsed) {
+    /*if (controlSidebarCollapsed) {
       removeWindowClass('control-sidebar-slide-open');
     } else {
       addWindowClass('control-sidebar-slide-open');
-    }
+    }*/
   }, [screenSize, controlSidebarCollapsed]);
 
   const handleUIChanges = () => {
@@ -148,7 +147,6 @@ const Main = () => {
                 : '0px',
           }}
         />
-        <ControlSidebar />
         <div
           id="sidebar-overlay"
           role="presentation"
