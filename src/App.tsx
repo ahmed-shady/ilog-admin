@@ -11,7 +11,7 @@ import { calculateWindowSize } from '@app/utils/helpers';
 import { setWindowSize } from '@app/store/reducers/ui';
 import ReactGA from 'react-ga4';
 
-import Dashboard from '@pages/Dashboard';
+import Dashboard from '@app/pages/dashboard/Dashboard';
 import Specialities from '@pages/specialities/Specialities';
 import SubMenu from '@pages/SubMenu';
 import Profile from '@pages/profile/Profile';
@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/loading/Loading';
 import Requirements from './pages/requirements/Requirements';
 import Doctors from './pages/doctors/Doctors';
+import Messages from './pages/contactus/Messages';
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -89,6 +90,7 @@ const App = () => {
             <Route path="/requirements" element = {<Requirements/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/doctors" element={<Doctors/>}/>
+            <Route path="/contactus-messages" element={<Messages />} />
             <Route path="/" element={<Dashboard />} />
           </Route>
         </Route>

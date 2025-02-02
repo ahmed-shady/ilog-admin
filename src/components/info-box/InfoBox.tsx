@@ -3,7 +3,7 @@ import { VARIANT_TYPES } from '../../utils/component-properties';
 import { OverlayLoading } from '../OverlayLoading';
 
 export interface InfoBoxProps {
-  loading?: 'dark' | boolean;
+  loading?: 'light' | boolean;
   icon?: {
     content: ReactNode;
     variant?: VARIANT_TYPES;
@@ -70,7 +70,7 @@ export const InfoBox = ({
       </div>
       {loading && (
         <OverlayLoading
-          type={typeof loading === 'string' ? loading : 'light'}
+          type={typeof loading === 'string' ? loading : 'dark'}
         />
       )}
     </div>
