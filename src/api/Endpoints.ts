@@ -8,7 +8,7 @@ const endPoints: Record<string, EndpointConfig> = {
         requireBody: true,
         public: true,
         success: {
-            toast: true,
+            toast: false,
             defaultMessage: "Login successful!"
         },
         error: {
@@ -72,7 +72,7 @@ const endPoints: Record<string, EndpointConfig> = {
         method: "GET",
         public: false,
         success: {
-            toast: true,
+            toast: false,
             defaultMessage: "documents fetched successfully"
         },
         error: {
@@ -99,7 +99,7 @@ const endPoints: Record<string, EndpointConfig> = {
         method: "GET",
         public: false,
         success: {
-            toast: true,
+            toast: false,
             defaultMessage: "requirements fetched successfully"
         },
         error: {
@@ -153,7 +153,7 @@ const endPoints: Record<string, EndpointConfig> = {
         method: "GET",
         public: false,
         success: {
-            toast: true,
+            toast: false,
             defaultMessage: "doctors fetched successfully"
         },
         error: {
@@ -186,11 +186,6 @@ const endPoints: Record<string, EndpointConfig> = {
             toast: true,
             defaultMessage: "Error while un-Verifying this Doctor"
         } 
-    },
-    "getCountryByName": {
-        url: `/countries/name/{name}`,
-        method: "GET",
-        public: false 
     },
     "deleteUser": {
         url: `/users/{id}`,
@@ -230,6 +225,108 @@ const endPoints: Record<string, EndpointConfig> = {
             toast: true,
             defaultMessage: "error while unsuspending user"
         }
+    },
+    "getCountryByName": {
+        url: `/countries/name/{name}`,
+        method: "GET",
+        public: false 
+    },
+    "listCountries": {
+        url: `/countries`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch countries list"
+        }
+    },
+    "listCountryStates": {
+        url: `/countries/{code}/states`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch attached states"
+        }
+    },
+    "searchDoctors": {
+        url: `/doctors/search`,
+        method: "POST",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch requested doctors data"
+        }
+    },
+    "doctorsStatisticsPerCountry": {
+        url: `/statistics/doctors-per-country`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch doctors statistics per country"
+        }
+    },
+    "doctorsStatisticsPerCountryState": {
+        url: `/statistics/doctors-per-state`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch doctors statistics per selected country state"
+        }
+    },
+    "getApplicationStats": {
+        url: `/statistics/app-stats`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch Application stats"
+        }
+    },"getContactusMessages": {
+        url: `/contactus`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch messages from users"
+        }
+    },"deleteContactusMessage": {
+        url: `/contactus/{id}`,
+        method: "DELETE",
+        public: false,
+        success: {
+            toast: true,
+            defaultMessage: "Successfully deleted"
+        },
+        error: {
+            toast: true,
+            defaultMessage: "Failed to delete message"
+        }
+    },"markContactusMessageAsRead": {
+        url: `/contactus/{id}/mark-as-read`,
+        method: "PUT",
+        public: false
+    },
+    "getNotifications": {
+        url: `notifications`,
+        method: "GET",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to get your notifications"
+        }
+    },
+    "markNotificationAsRead": {
+        url: `notifications/{id}/mark-as-read`,
+        method: "PUT",
+        public: false
+    },
+    "markAllNotificationsAsRead": {
+        url: `notifications/mark-all-as-read`,
+        method: "PUT",
+        public: false
     },
 }
 

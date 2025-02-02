@@ -49,3 +49,18 @@
 .control-sidebar-slide-open .control-sidebar::before {
   transition: none;
 }
+
+.btn-primary{
+  color: white !important;
+}
+
+
+.page-icon {
+  color: #44B9CB;
+}
+
+.text-ellipsis {
+  white-space: nowrap;       /* Prevent text from wrapping */
+  overflow: hidden;          /* Hide the overflow content */
+  text-overflow: ellipsis;   /* Add "..." when the text overflows */
+}
