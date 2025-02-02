@@ -3,5 +3,9 @@ export interface Country{
     name: string,
     code: string,
     dialCode: string,
-    image: string
+    image: string,
+    latitude: number,
+    longitude: number,
+    bbox: number[],
+    doctorsCount?: number
 }
