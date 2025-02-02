@@ -2,7 +2,9 @@ import EndpointConfig from "@app/types/EndpointConfig";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const BASE_URL = "http://195.35.25.233:8080";
+export const BASE_URL = "https://ilog-app.com/api";
+export const DIRECT_BASE_URL = "https://direct.ilog-app.com";
+
 
 // // Add a request interceptor
 // axios.interceptors.request.use(function (config) {
