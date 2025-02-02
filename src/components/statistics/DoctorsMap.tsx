@@ -4,7 +4,7 @@ import Map, { Marker } from 'react-map-gl';
 import './util/styles.scss'
 import { Country } from '@app/types/Country';
 import { CountryState } from '@app/types/CountryState';
-import { GeographicLocation, worldCenter } from './util/MapOptions';
+import { worldCenter } from './util/MapOptions';
 import { useNavigate } from 'react-router-dom';
 import { doctorsStatisticsPerCountry, doctorsStatisticsPerCountryState } from '@app/api/StatisticsServic';
 import { count } from 'console';
