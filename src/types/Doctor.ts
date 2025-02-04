@@ -9,8 +9,7 @@ export default interface Doctor{
     jobTitle?: string,
     name: string,
     country: string,
-    state?: string
-    imageUrl?: string,
+    state?: string,
     hospital?: string,
     speciality: Speciality,
     phoneNumber: string,
