@@ -1,72 +1,123 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { NotificationMenu } from '@app/styles/dropdown-menus';
+import { ReduxState, useAppSelector } from '@app/store/store';
+import {useState, useEffect, useCallback} from 'react';
+import NotificationConnector, { useNotifications } from './NotificationConnector';
+import NotificationType from '@app/types/NotificationType';
+import Notification from '@app/types/Notification';
+
+
+const notificationIcons: Partial<Record<NotificationType, string>> = {
+  [NotificationType.NEW_MESSAGES]: "fa-envelope",
+  [NotificationType.NEW_USERS]: "fa-users",
+  [NotificationType.NEW_DOCUMENTS]: "fa-file"
+};
 
 const NotificationsDropdown = () => {
-  const [t] = useTranslation();
+  const currentUser = useAppSelector((state: ReduxState) => state.auth.currentUser);
+  const [notificationsCount, setNotificationsCount] = useState(0);
+
+  if(!currentUser){
+    return null;
+  }
 
   return (
-    <NotificationMenu hideArrow>
+    <NotificationMenu isOpen={false}>
       <div slot="head">
         <i className="far fa-bell" />
-        <span className="badge badge-warning navbar-badge">15</span>
+        {notificationsCount > 0 &&
+          <span className="badge badge-warning navbar-badge">{notificationsCount}</span>
+        }
       </div>
       <div slot="body">
-        <span className="dropdown-item dropdown-header">
-          {t('header.notifications.count', { quantity: '15' })}
-        </span>
-        <div className="dropdown-divider" />
-        <Link to="/" className="dropdown-item">
-          <i className="fas fa-envelope mr-2" />
-          <span>
-            {t('header.notifications.newMessagesCount', {
-              quantity: '4',
-            })}
-          </span>
-          <span className="float-right text-muted text-sm">
-            {t('measurement.quantityUnit', {
-              quantity: '3',
-              unit: 'mins',
-            })}
-          </span>
-        </Link>
-        <div className="dropdown-divider" />
-        <Link to="/" className="dropdown-item">
-          <i className="fas fa-users mr-2" />
-          <span>
-            {t('header.notifications.friendRequestsCount', {
-              quantity: '5',
-            })}
-          </span>
-          <span className="float-right text-muted text-sm">
-            {t('measurement.quantityUnit', {
-              quantity: '12',
-              unit: 'hours',
-            })}
-          </span>
-        </Link>
-        <div className="dropdown-divider" />
-        <Link to="/" className="dropdown-item">
-          <i className="fas fa-file mr-2" />
-          <span>
-            {t('header.notifications.reportsCount', {
-              quantity: '3',
-            })}
-          </span>
-          <span className="float-right text-muted text-sm">
-            {t('measurement.quantityUnit', {
-              quantity: '2',
-              unit: 'days',
-            })}
-          </span>
-        </Link>
-        <div className="dropdown-divider" />
-        <Link to="/" className="dropdown-item dropdown-footer">
-          {t('header.notifications.seeAll')}
-        </Link>
+      <NotificationConnector userId={currentUser.id}>
+                <NotificationDisplay setNotificationsCount={setNotificationsCount} />
+            </NotificationConnector>
       </div>
     </NotificationMenu>
   );
 };
+
+
+  interface NotificationItemProps {
+    notification: Notification,
+    markAsRead: any
+  }
+
+  const NotificationItem: React.FC<NotificationItemProps> = ({ notification, markAsRead }) => {
+
+  const iconClasses = `fas mr-2 ${notificationIcons[notification.type] || 'fa-cog'}`;
+  const navigate = useNavigate();
+
+  const navigateToNotification = useCallback(() => {
+    markAsRead(notification.id);
+    let navigateTo = "";
+    let navigateOptions = {};
+    switch (notification.type) {
+      case NotificationType.NEW_MESSAGES:
+        navigateTo = `/contactus-messages`;
+        break;
+      case NotificationType.NEW_USERS:
+        navigateTo = `/doctors`;
+        break;
+      case NotificationType.NEW_DOCUMENTS:
+        navigateTo = `/doctors`;
+        navigateOptions = { state: { hasPendingDocuments: true } }
+        break;
+      default:
+        break;
+    }
+    navigateTo && navigate(navigateTo, navigateOptions);
+  }, [markAsRead, notification]);
+
+  const clicked = () => {
+    navigateToNotification();
+  }
+
+
+  return (
+    <>
+      <div className="dropdown-divider" />
+      <div className="dropdown-item" onClick={clicked}>
+        <i className={iconClasses} />
+        <span>
+          {notification.title}
+        </span>
+        <span className="float-right text-muted text-sm">
+          {'12 hours'}
+        </span>
+      </div>
+    </>
+  )
+}
+
+interface NotificationDisplayProps {
+  setNotificationsCount: (count: number) => void;
+}
+
+const NotificationDisplay: React.FC<NotificationDisplayProps> = ({ setNotificationsCount }) => {
+  const { notifications, markAsRead } = useNotifications();  // Use the context to get notifications
+
+  const [t] = useTranslation();
+
+  useEffect(() => {
+    const nonReadCount: number = notifications.filter(n => !n.read).length || 0;
+    setNotificationsCount(nonReadCount);
+
+  }, [notifications]);
+
+
+
+  return (
+    <>
+      <span className="dropdown-item dropdown-header">
+        {t('header.notifications.count', { quantity: notifications.length })}
+      </span>
+
+      {notifications.map((notification, idx) => <NotificationItem key={idx} notification={notification} markAsRead={markAsRead}/>)}
+    </>
+  )
+}
 
 export default NotificationsDropdown;
