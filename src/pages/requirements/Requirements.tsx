@@ -10,7 +10,7 @@ import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
 const DOCTOR_TYPES_TEXT: any = {};
 DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE] = "Trainee";
 DOCTOR_TYPES_TEXT[DoctorTypeEnum.CONSULTANT] = "Consultant";
-DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE_AND_CONSULTANT] = "Trainee and Consultant";
+DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE_AND_CONSULTANT] = "Both";
 
 const Requirements = () => {
     const [requirements, setRequirements] = useState<Requirement[]>([]);
@@ -26,16 +26,17 @@ const Requirements = () => {
       setshowConfirmModal(false);
     }
     
-    const submitDelete = async (id: number | undefined) => {
+    const submitDelete = async (id?: number) => {
       closeAllModals();
       setLoading(true);
       try{
-        if(id !== undefined)
+        if(id)
           await deleteRequirement(id);
         setRequirements([...requirements.filter(r => r.id !== id)]);
-      }catch(error){
+      }finally{
+        setLoading(false); 
+
       }
-      setLoading(false); 
     }
     const submitRequirement = async (requirement: Requirement, action:string) => {
       if(action === "new"){
@@ -43,9 +44,10 @@ const Requirements = () => {
         try{
           const newRequirement = await addRequirement(requirement);
           setRequirements([...requirements, newRequirement]);
-        }catch(error){
+        }finally{
+          setLoading(false);
         }
-        setLoading(false);
+        
     }else if(action === "edit"){
       setLoading(true);
       try{
@@ -54,9 +56,10 @@ const Requirements = () => {
         const id = newRequirements.findIndex(r => r.id === newRequirement.id);
         newRequirements[id] = newRequirement;
         setRequirements(newRequirements);
-      }catch(error){
+      }finally{
+        setLoading(false);
       }
-      setLoading(false);
+      
     }
   }
     useEffect(() => {
@@ -66,11 +69,9 @@ const Requirements = () => {
       }
       fetchData().then(requirements => {
         setRequirements(requirements);
-        setLoading(false);
 
-      }).catch((error: any) => {
+      }).finally(() => {
         setLoading(false);
-      
       });
     }, []);
 
@@ -102,7 +103,7 @@ const Requirements = () => {
       <Card.Header><h3><i className="fas fa-solid fa-briefcase requirement-icon"></i> Requirements</h3></Card.Header>
       <Card.Body>
       <div className="d-flex justify-content-end">
-        <Button variant="info" className="new-btn" title="add new requirement" onClick={()=>setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
+        <Button variant="info" className="new-btn text-light" title="add new requirement" onClick={()=>setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
 </div>
         <table className="table table-bordered table-striped table-responsive-sm">
         <thead>

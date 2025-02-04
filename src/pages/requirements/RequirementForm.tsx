@@ -1,9 +1,8 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Alert, Form, InputGroup } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Requirement from '@app/types/Requirement';
 import './Requirements.scss'
 
 
@@ -11,7 +10,6 @@ import * as Yup from 'yup';
 import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
 
 const RequirementForm = ({show, requirement, submit, close}: any) => {
-    const [showAlert, setShowAlert] = useState(false);
 
     
     const x = () => {
@@ -38,6 +36,7 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
   
     return (
       <>
+        {/* @ts-ignore */}
         <Modal show={show} onHide={close}>
           {/* @ts-ignore */}
           <Modal.Header closeButton>
@@ -78,12 +77,9 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
               <select
                 id="doctorType"
                 name="doctorType"
-                placeholder="Requirement for"
                 className="form-control"
                 onChange={handleChange}
                 value={values.doctorType}
-                isValid={touched.doctorType && !errors.doctorType}
-                isInvalid={touched.doctorType && !!errors.doctorType}  
               >
                   <option value={DoctorTypeEnum.TRAINEE}>Trainee</option>
                   <option value={DoctorTypeEnum.CONSULTANT}>Consultant</option>
@@ -124,7 +120,7 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
             <Button variant="secondary" onClick={close}>
               Close
             </Button>
-            <Button variant="info" type="submit" form="requirement-form">
+            <Button variant="info" type="submit" className='text-light' form="requirement-form">
               Save Changes
             </Button>
       
