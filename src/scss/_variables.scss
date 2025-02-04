@@ -4,6 +4,7 @@
 
 // COLORS
 // --------------------------------------------------------
+@import './bootstrap-variables';
 $blue: #0073b7 !default;
 $lightblue: #3c8dbc !default;
 $navy: #001f3f !default;
@@ -17,6 +18,7 @@ $maroon: #d81b60 !default;
 $black: #111 !default;
 $gray-x-light: #d2d6de !default;
 
+$colors: ();
 $colors: map-merge(
   (
     "lightblue": $lightblue,
