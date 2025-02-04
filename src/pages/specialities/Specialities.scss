@@ -331,3 +331,29 @@ table.table td a.delete {
 .horizontal-scrollable > .row > .col-xs-4 > img {
     width: 100px;
 }
+
+
+.input-group-append.remove-activity{
+  cursor: pointer;
+}
+.input-group-append.remove-activity .input-group-text:hover{
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #333;
+}
+
+.input-group-append.remove-activity .input-group-text{
+  background-color: #DC3534;
+  color: #eee;
+  border: 1px solid #DC3534;
+}
+
+
+
+///////////////form////////////////////////
+#speciality-form{
+  div.procedures{
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+}

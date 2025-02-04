@@ -31,12 +31,10 @@ const Specialities = () => {
       setLoading(false); 
     }
     const submitSpeciality = async (speciality: Speciality, action:string) => {
-      console.log(action);
       if(action === "new"){
-        console.log("nenn");
         setLoading(true);
         try{
-          const newSpeciality = await addSpeciality(speciality.name);
+          const newSpeciality = await addSpeciality(speciality.name, speciality.proceduralActivities);
           setSpecialities([...Specialities, newSpeciality]);
         }catch(error){
         }
@@ -44,7 +42,7 @@ const Specialities = () => {
     }else if(action === "edit"){
       setLoading(true);
       try{
-        const newSpeciality = await updateSpeciality(speciality.id, speciality.name);
+        const newSpeciality = await updateSpeciality(speciality.id, speciality.name, speciality.proceduralActivities);
         var newSpecialities = [...Specialities];
         const id = newSpecialities.findIndex(s => s.id === newSpeciality.id);
         newSpecialities[id] = newSpeciality;
@@ -97,14 +95,14 @@ const Specialities = () => {
       <Card.Header><h3><i className="fas fa-solid fa-briefcase speciality-icon"></i> Specailities</h3></Card.Header>
       <Card.Body>
       <div className="d-flex justify-content-end">
-        <Button variant="info" className="new-btn" title="add new speciality" onClick={()=>setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
+        <Button variant="info" className="new-btn text-light" title="add new speciality" onClick={()=>setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
 </div>
         <table className="table table-bordered table-striped table-responsive-sm">
         <thead>
           <tr>
             <th className="text-center" scope="col">#</th>
             <th className="text-center" scope="col">Name</th>
-            <th className="text-center" scope="col">Registred Doctors</th>
+          <th className="text-center" scope="col">Surgical Procedures</th>
             <th className="text-center" scope="col">Actions</th>
           </tr>
         </thead>
@@ -114,7 +112,7 @@ const Specialities = () => {
           <tr className="text-center" key={idx}>
             <th className="text-center" scope="row">{idx}</th>
             <td className="text-cener">{speciality.name}</td>
-            <td className="text-center">{speciality.doctorsCount || 0}</td>
+            <td className="text-center">{speciality.proceduralActivities?.length || 0}</td>
             <td className='text-center'>
                 <ButtonGroup size="sm">
                   <button type="button" title="edit" className="action-btn btn btn-success" onClick={()=>{setCurrentSpeciality(speciality);setShowModal(true);}}><i className="fas fa-edit"></i></button>

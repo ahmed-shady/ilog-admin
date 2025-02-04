@@ -12,10 +12,10 @@ export const listSpecialites = async (): Promise<Speciality[]> => {
   }
 };
 
-export const addSpeciality = async (name: string): Promise<Speciality> => {
+export const addSpeciality = async (name: string, proceduralActivities: string[]): Promise<Speciality> => {
   try {
       const response = await callApi(endPoints.addSpeciality, {
-        data: {name}
+        data: {name, proceduralActivities}
       });
       return response;
   } catch (error) {
@@ -23,10 +23,10 @@ export const addSpeciality = async (name: string): Promise<Speciality> => {
   }
 };
 
-export const updateSpeciality = async (id: number, name: string): Promise<Speciality> => {
+export const updateSpeciality = async (id: number, name: string, proceduralActivities: string[]): Promise<Speciality> => {
   try {
       const response = await callApi(endPoints.updateSpeciality, {
-        data: {name},
+        data: {name, proceduralActivities},
         urlParams: {id}
       });
       return response;
