@@ -19,6 +19,7 @@ export default interface Doctor{
     identity: Identity,
     email: string,
     emailVerified: boolean,
+    registeredAt: string,
     suspended: boolean,
     profileImage: string
 

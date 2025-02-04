@@ -7,13 +7,13 @@ import Requirement from '@app/types/Requirement';
 import './Doctors.scss'
 
 
-import * as Yup from 'yup';
-import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
+
 import { changeDocumentVerification, listDocuments } from '@app/api/DocumentService';
 import Document from '@app/types/Document';
 import { listRequirements } from '@app/api/RequirementService';
 import DocumentStatus from '@app/types/DocumentStatus';
 import { Loading } from '@app/components/loading/Loading';
+import SingleRequirement from './SingleRequirement';
 
 const DOCUMENT_STATUS_META: any = {};
 
@@ -25,9 +25,11 @@ DOCUMENT_STATUS_META["NOT_UPLOADED"] = {style: "badge-secondary", text: "not upl
 const DoctorsDocuments = ({show, doctor, close}: any) => {
 
     const [requirements, setRequirements] = useState<Requirement[]>([]);
+    const [imagesErr, setImagesErr] = useState<boolean[]>([]);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(false);
     const [imageLoading, setImageLoading] = useState(true);
+    const [imageErr, setImageErr] = useState(false);
 
     const [selectedRequirement, setSelectedRequirement] = useState<Requirement | null>(null);
     const [rejecting, setRejecting] = useState(false);
@@ -83,7 +85,10 @@ const DoctorsDocuments = ({show, doctor, close}: any) => {
         const requirements = await listRequirements(doctor.type, {success:{toast:false}});
         requirements.forEach(req => {
           req.document = documents.find(doc => doc.requirementId === req.id);
+          
         });
+        setImagesErr(Array(requirements.length).fill(false));
+        
         return requirements;
       }
       fetchData().then(requirements => {
@@ -123,14 +128,16 @@ const DoctorsDocuments = ({show, doctor, close}: any) => {
 
     <Modal.Body className="overflow-hidden">
       {imageLoading && <Loading/>}
-      <img style={{display:(imageLoading?"none":"block")}} src={selectedRequirement?.document?`http://195.35.25.233:8080${selectedRequirement?.document.documentUrl}`:"img/not-found.jpg"}
+      <img style={{display:(imageLoading || imageErr?"none":"block")}}
+       src={selectedRequirement?.document?.documentUrl || "img/not-found.jpg"}
       className="object-fit-contain"
-      onLoad={()=>{setImageLoading(false)}}
-      onError={()=>{setImageLoading(false)}}
+      onLoad={()=>{setImageLoading(false); setImageErr(false);}}
+      onError={()=>{console.log("errrrr"); setImageLoading(false); setImageErr(true)}}
       />
+      {imageErr && <a download target='_blank' href={selectedRequirement?.document?.documentUrl}>download</a>}
     </Modal.Body>
     <Modal.Footer className="text-center p-0">
-                <div className='action-pane w-100'>
+                <form className='action-pane w-100' autoComplete='off'>
                 {rejecting?
                 <InputGroup className="mb-3 justify-content-center">
                   <Form.Control
@@ -153,27 +160,16 @@ const DoctorsDocuments = ({show, doctor, close}: any) => {
                 </InputGroup>
               :
               <ButtonGroup>
-                  <Button variant="primary" disabled={actionLoading} onClick={accept}>Accept</Button>
-                  <Button variant="danger" disabled={actionLoading} onClick={()=>{setRejecting(true)}}>Reject</Button>
+                  <Button variant="primary" disabled={actionLoading || !selectedRequirement?.document} onClick={accept}>Accept</Button>
+                  <Button variant="danger" disabled={actionLoading || !selectedRequirement?.document} onClick={()=>{setRejecting(true)}}>Reject</Button>
                 </ButtonGroup>
               }
 
-                </div>
+                </form>
                 <hr className="w-100"/>
                 <div className="p-2 m-0 position-relative border-0 w-100 justify-content-center align-items-center d-flex overflow-auto image-pane">
                   {requirements.map((requirement, idx) => 
-                    <div key={idx} onClick={() => {selectRequirement(requirement)}}
-                    className={`position-relative ${requirement.id===selectedRequirement?.id?"active":""}`}
-                    >
-                      {(!requirement.document) && <i className="fas fa-question-circle text-secondary fa-2x"/>}
-                      {(requirement.document?.verification?.status===DocumentStatus.PENDING) && <i className="fas fa-clock text-warning fa-2x"/>}
-                      {(requirement.document?.verification?.status===DocumentStatus.REJECTED) && <i className="fas fa-times-circle text-danger fa-2x"/>}
-                      {(requirement.document?.verification?.status===DocumentStatus.VERIFIED) && <i className="fas fa-check-circle text-success fa-2x"/>}
-
-                      <img className='object-fit-contain border rounded'
-                          src={requirement.document?`http://195.35.25.233:8080${requirement?.document.documentUrl}`:"img/not-found.jpg"}
-                      />
-                      </div>
+                    <SingleRequirement key={idx} requirement={requirement} selected={requirement.id===selectedRequirement?.id} selectRequirement={selectRequirement}/>
                   )}
 
                 </div>
