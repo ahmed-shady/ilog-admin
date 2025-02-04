@@ -5,3 +5,9 @@ enum NotificationType{
 }
 
 export default NotificationType;
+
+export const NON_REPETITIVE_NOTIFICATIONS = [
+    NotificationType.NEW_USERS,
+    NotificationType.NEW_DOCUMENTS,
+    NotificationType.NEW_MESSAGES
+];
