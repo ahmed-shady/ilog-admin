@@ -80,7 +80,7 @@ export const SidebarSearch = () => {
     results: IMenuItem[] = []
   ): IMenuItem[] => {
     for (const menuItem of menuItems) {
-      if (menuItem.name.includes(searchText) && menuItem.path) {
+      if (menuItem.name.toLowerCase().includes(searchText.toLowerCase()) && menuItem.path) {
         results.push(menuItem);
       }
       if (menuItem.children) {
