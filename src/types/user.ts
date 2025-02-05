@@ -6,7 +6,9 @@ export default interface User{
     email: string,
     emailVerified: boolean,
     suspended: boolean,
-    updatedAt: Date,
-    role: UserRole
+    updatedAt: string,
+    createdAt: Date,
+    role: UserRole,
+    profileImage: string
 
 }

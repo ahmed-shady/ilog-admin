@@ -227,7 +227,7 @@ const Doctors = () => {
                     <th className="text-center" scope="row">{currentPage * 15 + idx + 1}</th>
                     <td className="text-cener">{doctor.name}</td>
                     <td className="text-cener">{doctor.email}</td>
-                    <td className='text-center'>{formatDateTime(doctor.registeredAt)}</td>
+                    <td className='text-center'>{formatDateTime(new Date(doctor.registeredAt))}</td>
                     <td className="text-center">{DOCTOR_TYPES_TEXT[doctor.type]}</td>
                     {/* <td className='text-center'>{doctor.identity?.id || "unknown"}</td>
             <td className='text-center'>{doctor.phoneNumber}</td> */}

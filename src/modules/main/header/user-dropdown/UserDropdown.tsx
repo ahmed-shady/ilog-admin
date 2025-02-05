@@ -4,15 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { StyledBigUserImage, StyledSmallUserImage } from '@app/styles/common';
 import {logout} from '@app/api/AuthService'
 import {
-  UserBody,
   UserFooter,
   UserHeader,
   UserMenuDropdown,
 } from '@app/styles/dropdown-menus';
 import {} from '@app/index';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
-import { DateTime } from 'luxon';
 import { setCurrentUser } from '@app/store/reducers/auth';
+import { formatDate } from '@app/utils/DateUtil';
 
 const UserDropdown = () => {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const UserDropdown = () => {
     <UserMenuDropdown isOpen={dropdownOpen} hideArrow>
       <StyledSmallUserImage
         slot="head"
-        src={currentUser?.photoURL}
+        src={currentUser?.profileImage}
         fallbackSrc="/img/default-profile.png"
         alt="User"
         width={25}
@@ -48,8 +47,8 @@ const UserDropdown = () => {
       <div slot="body">
         <UserHeader className=" bg-primary">
           <StyledBigUserImage
-            src={currentUser?.photoURL}
-            fallbackSrc="/img/default-profile.png"
+            src={currentUser?.profileImage}
+            fallbackSrc="/img/avatar.png"
             alt="User"
             width={90}
             height={90}
@@ -59,11 +58,9 @@ const UserDropdown = () => {
             {currentUser?.name || currentUser?.email}
             <small>
               <span>Member since </span>
-              {currentUser?.metadata?.creationTime && (
+              {currentUser?.createdAt && (
                 <span>
-                  {DateTime.fromRFC2822(
-                    currentUser?.metadata?.creationTime
-                  ).toFormat('dd LLL yyyy')}
+                  {formatDate(new Date(currentUser.createdAt))}
                 </span>
               )}
             </small>
