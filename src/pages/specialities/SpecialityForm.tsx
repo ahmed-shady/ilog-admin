@@ -117,7 +117,7 @@ const SpecialityForm = ({ show, speciality, submit, close }: any) => {
           </Alert>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='warning' className='text-light' onClick={addProceduralActivity}>Add Procedural Activity</Button>
+          <Button variant='warning' className='text-light' onClick={addProceduralActivity}>Add Procedure</Button>
           <Button variant="secondary" onClick={close}>
             Close
           </Button>
