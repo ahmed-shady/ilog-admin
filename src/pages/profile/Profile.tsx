@@ -52,7 +52,7 @@ const Profile = () => {
                   <h3 className="profile-username text-center">
                     {currentUser?.displayName}
                   </h3>
-                  <p className="text-muted text-center">Software Engineer</p>
+                  <p className="text-muted text-center">--title--</p>
                   <ul className="list-group list-group-unbordered mb-3">
                     <li className="list-group-item">
                       <b>{t('header.user.followers')}</b>
