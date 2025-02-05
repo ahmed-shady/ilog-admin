@@ -21,5 +21,9 @@ export default ({ mode }) => {
         '@pages': path.resolve(__dirname, './src/pages'),
       },
     },
+    build: {
+      outDir: 'dist', // Ensure the build output directory is set correctly
+    },
+    base: '/', // 👈 Make sure this is set correctly
   });
 };
