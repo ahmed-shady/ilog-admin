@@ -2,7 +2,7 @@ import EndpointConfig from "@app/types/EndpointConfig";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const BASE_URL = "https://ilog-app.com/api";
+export const BASE_URL = "https://api.ilog-app.com";
 export const DIRECT_BASE_URL = "https://direct.ilog-app.com";
 
 
