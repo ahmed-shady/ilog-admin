@@ -6,7 +6,8 @@ import {useState, useEffect, useCallback} from 'react';
 import NotificationConnector, { useNotifications } from './NotificationConnector';
 import NotificationType from '@app/types/NotificationType';
 import Notification from '@app/types/Notification';
-
+import { formatDateTime } from '@app/utils/DateUtil';
+import './notification.scss';
 
 const notificationIcons: Partial<Record<NotificationType, string>> = {
   [NotificationType.NEW_MESSAGES]: "fa-envelope",
@@ -23,7 +24,7 @@ const NotificationsDropdown = () => {
   }
 
   return (
-    <NotificationMenu isOpen={false}>
+    <NotificationMenu className='notification-menu' isOpen={false}>
       <div slot="head">
         <i className="far fa-bell" />
         {notificationsCount > 0 &&
@@ -75,7 +76,9 @@ const NotificationsDropdown = () => {
     navigateToNotification();
   }
 
+  const notificationFormatDateTime = useCallback(() => {
 
+  }, [notification]);
   return (
     <>
       <div className="dropdown-divider" />
@@ -85,7 +88,7 @@ const NotificationsDropdown = () => {
           {notification.title}
         </span>
         <span className="float-right text-muted text-sm">
-          {'12 hours'}
+          {formatDateTime(new Date(notification.createdAt))}
         </span>
       </div>
     </>
