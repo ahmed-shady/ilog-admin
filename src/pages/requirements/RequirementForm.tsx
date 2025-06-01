@@ -16,7 +16,7 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
       return useFormik({
         initialValues: {
           name: requirement?.name || '',
-          doctorType: requirement?.doctorType || DoctorTypeEnum.TRAINEE_AND_CONSULTANT,
+          doctorType: requirement?.doctorType || DoctorTypeEnum.TRAINEE,
           optional: requirement?.optional || false
         },
         validationSchema: Yup.object({
@@ -83,7 +83,7 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
               >
                   <option value={DoctorTypeEnum.TRAINEE}>Trainee</option>
                   <option value={DoctorTypeEnum.CONSULTANT}>Consultant</option>
-                  <option value={DoctorTypeEnum.TRAINEE_AND_CONSULTANT}>Both</option>
+                  <option value={DoctorTypeEnum.SPECIALIST}>Specialist</option>
                 </select>
                 {touched.doctorType && errors.doctorType ? (
                   <Form.Control.Feedback type="invalid">

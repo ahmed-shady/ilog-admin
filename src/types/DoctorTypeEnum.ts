@@ -1,7 +1,7 @@
  enum DoctorTypeEnum{
     TRAINEE = "TRAINEE",
     CONSULTANT="CONSULTANT",
-    TRAINEE_AND_CONSULTANT="TRAINEE_AND_CONSULTANT"
+    SPECIALIST="SPECIALIST"
 }
 
 export default DoctorTypeEnum;

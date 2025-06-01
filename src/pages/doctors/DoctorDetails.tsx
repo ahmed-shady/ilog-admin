@@ -73,7 +73,7 @@ const DoctorDetails = ({ show, doctor, close, toggleVerify, showDocuments, actio
                 >
                   <option value={DoctorTypeEnum.TRAINEE}>Trainee</option>
                   <option value={DoctorTypeEnum.CONSULTANT}>Consultant</option>
-                  <option value={DoctorTypeEnum.TRAINEE_AND_CONSULTANT}>Trainee and Consultant</option>
+                  <option value={DoctorTypeEnum.SPECIALIST}>Specialist</option>
                 </select>
                 <InputGroup.Append>
                   <InputGroup.Text>

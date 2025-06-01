@@ -4,6 +4,6 @@ const DOCTOR_TYPES_TEXT: any = {};
 
 DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE] = "Trainee";
 DOCTOR_TYPES_TEXT[DoctorTypeEnum.CONSULTANT] = "Consultant";
-DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE_AND_CONSULTANT] = "Trainee and Consultant";
+DOCTOR_TYPES_TEXT[DoctorTypeEnum.SPECIALIST] = "Specialist";
 
 export default DOCTOR_TYPES_TEXT;
