@@ -1,83 +1,150 @@
-import { useFormik } from 'formik';
-import { Alert, Form, InputGroup } from 'react-bootstrap';
+import { addSpeciality, getSpeciality, updateSpeciality } from '@app/api/SpecialityService';
+import ProcedureOption from '@app/types/ProcedureOption';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import { Form, InputGroup, Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import * as Yup from 'yup';
+import Option from './Option';
+import { generateRandom } from '@app/utils/RanomGenerator';
+import Speciality from '@app/types/Speciality';
+import { Loading } from '@app/components/loading/Loading';
 
 
-const SpecialityForm = ({ show, speciality, submit, close }: any) => {
+interface FormProps {
+  show: boolean;
+  currentSpeciality?: Speciality;
+  submit: any;
+  close: any
+
+}
+
+const SpecialityForm: React.FC<FormProps> = ({ show, currentSpeciality, submit, close }) => {
+
   // const [showAlert, setShowAlert] = useState(false);
 
-  const initializeForm = () => {
-    return useFormik({
-      initialValues: {
-        name: speciality?.name || '',
-        proceduralActivities: speciality?.proceduralActivities || []
-      },
-      validationSchema: Yup.object({
-        name: Yup.string().required('Speciality name is required'),
-        proceduralActivities: Yup.array()
-        .of(
-          Yup.string().required("Can't be empty")  // Validation for each array element
-        )
-        .required('Must have items') // Ensure array itself is present
-        .min(1, 'At least one item is required')  // Custom array validations
-      }),
-      onSubmit: (values) => {
-        const newSpeciality = {name: values.name, proceduralActivities: values.proceduralActivities};
-        close();
-        if (speciality)
-          submit({ ...speciality, ...newSpeciality }, "edit");
-        else
-          submit(newSpeciality, "new")
-      },
-    });
-  }
-  const { handleChange, values, handleSubmit, touched, errors, setFieldValue } = initializeForm();
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const addProceduralActivity = () => {
-    setFieldValue("proceduralActivities", [...values.proceduralActivities, ""])
+  const [name, setName] = useState<string>(
+    currentSpeciality?.name || ""
+  );
+  const [procedures, setProcedures] = useState<ProcedureOption[]>(
+    (currentSpeciality?.procedures)? JSON.parse(JSON.stringify(currentSpeciality.procedures)) : []
+  );
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [hasError, setHasError] = useState(false);
 
-  }
-  const changeProceduralActivity =(idx: number, value: string) => {
-    values.proceduralActivities[idx] = value;
-    setFieldValue("proceduralActivities", [...values.proceduralActivities])
+  useEffect(() => {
+    initializeOptions(procedures);
+  }, [procedures]);
 
+  const initializeOptions = (mock?: ProcedureOption[]) => {
+    mock?.forEach(p => {
+      if (!p.identifier) {
+        p.identifier = generateRandom();
+      }
+      if (p.options?.length) {
+        initializeOptions(p.options);
+      }
+    })
   }
 
-  const removeActivity = (idx: number) => {
-    values.proceduralActivities.splice(idx, 1);
-    setFieldValue("proceduralActivities", [...values.proceduralActivities]);   
+  const submitForm = async (e: FormEvent) => {
+      e.preventDefault();
+        var obj = {...(currentSpeciality || {}), name, procedures};
+        setSubmitting(true);
+        setLoading(true);
+        try{
+          const saved = (currentSpeciality?.id)? 
+          await updateSpeciality(currentSpeciality.id, obj):
+          await addSpeciality(obj);
+
+          let action = (currentSpeciality?.id)? "edit": "new"
+          submit(saved, action);
+          setName(saved.name);
+          setProcedures(saved?.procedures || [])
+        }finally{
+          setSubmitting(false);
+          setLoading(false);
+        }
+  };
+
+    // Sync error state
+    useEffect(() => {
+      const childError = Object.values(errors).some(Boolean);
+      const currentHasError = childError || !name;
+      setHasError(currentHasError);
+    }, [errors, name]);
+  
+    // Child error handler
+    const handleError = useCallback((identifier: string, value: boolean) => {
+      setErrors((prev) => ({ ...prev, [identifier]: value }));
+    }, []);
+    
+    // Delete sub-option
+    const deleteProcedure = useCallback(
+      (identifier: string) => {
+        setProcedures(
+          (prevProcedures) => prevProcedures.filter((p) => p.identifier !== identifier)
+        );
+    },[setProcedures]);
+
+  // Fetch procedures if editing
+  useEffect(() => {
+    const loadSpecialityDetials = async () => {
+      if (currentSpeciality?.id) {
+        setLoading(true);
+        try {
+          const specialityDetails = await getSpeciality(currentSpeciality.id);
+          setProcedures(specialityDetails?.procedures || []);
+          setName(specialityDetails.name);
+        } catch (err) {
+          console.error('Failed to load procedures', err);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    loadSpecialityDetials();
+  }, [currentSpeciality]);
+
+
+  const addProcedure = () => {
+    setProcedures([...procedures, { identifier: generateRandom(), value: "" }]);
   }
+
   return (
     <>
       {/* @ts-ignore */}
       <Modal show={show} onHide={close}>
         {/* @ts-ignore */}
         <Modal.Header closeButton>
-          <Modal.Title>{speciality ? 'Edit Speciality' : 'Add new Speciality'}</Modal.Title>
+          <Modal.Title>{currentSpeciality ? 'Edit Speciality' : 'Add new Speciality'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit} id="speciality-form">
+          {
+                loading && 
+                <Loading customMessage={submitting? 'Saving': undefined} transparent
+                />
+                }
+          <form onSubmit={submitForm} id="speciality-form">
             <div className="mb-3">
-            <label>Name:</label>
+              <label>Name:</label>
               <InputGroup className="mb-3">
                 <Form.Control
                   id="name"
                   name="name"
                   type="text"
                   placeholder="Speciality name"
-                  onChange={handleChange}
+                  onChange={(e) => setName(e.target.value)}
 
-                  value={values.name}
-                  isValid={touched.name && !errors.name}
-                  isInvalid={touched.name && !!errors.name}
+                  value={name}
+                  isInvalid={!name}
                 />
-                {touched.name && errors.name ? (
+                {!name ? (
                   <Form.Control.Feedback type="invalid">
-                    {/* @ts-ignore */}
-                    {errors.name}
+                    Name is required
                   </Form.Control.Feedback>
                 ) : (
                   <InputGroup.Append>
@@ -87,41 +154,25 @@ const SpecialityForm = ({ show, speciality, submit, close }: any) => {
                   </InputGroup.Append>
                 )}
               </InputGroup>
-              {values.proceduralActivities?.length > 0 && <label>Surgical Procedures:</label>}
+              <label>Surgical Procedures:</label>
               <div className='row procedures'>
-                {values.proceduralActivities.map((activity: string, idx: number) =>
-                  <InputGroup key={idx} className="col-12 mb-3">
-                    <Form.Control value={activity}
-                      onChange={(e) => {
-                        changeProceduralActivity(idx, e.target.value);
-                      }}
-                      /*@ts-ignore */
-                      isInvalid={touched.proceduralActivities && touched.proceduralActivities[idx] && errors.proceduralActivities && !!errors.proceduralActivities[idx]}
+                {procedures?.map((activity: ProcedureOption, idx: number) =>
+                    <Option
+                      onError={handleError}
+                      key={`${idx}`}
+                      onDelete={deleteProcedure} activity={activity} padding={30}
                     />
-                    <InputGroup.Append
-                      className={"remove-activity " }
-                      onClick={() => removeActivity(idx)}
-                    >
-                      <InputGroup.Text>
-                        <i className="fas fa-trash" />
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
-                )}
+                  )
+                }
               </div>
             </div>
 
           </form>
-          <Alert variant="danger" className='border-0 font-weight-bold text-light' show={!!errors.proceduralActivities && !!touched.proceduralActivities}>
-            Surgical Procedure can't be empty
-          </Alert>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='warning' className='text-light' onClick={addProceduralActivity}>Add Procedure</Button>
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-          <Button variant="info" type="submit" className='text-light' form="speciality-form">
+          <Button variant="secondary" onClick={close}>Close</Button>
+          <Button disabled={loading} variant='warning' className='text-light' onClick={addProcedure}>Add Procedure</Button>
+          <Button disabled={loading || hasError} variant="info" type="submit" className='text-light' form="speciality-form">
             Save Changes
           </Button>
 
@@ -132,5 +183,6 @@ const SpecialityForm = ({ show, speciality, submit, close }: any) => {
   );
 
 }
+
 
 export default SpecialityForm;

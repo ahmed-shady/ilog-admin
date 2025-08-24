@@ -1,4 +1,5 @@
 
+import ProcedureOption from "@app/types/ProcedureOption";
 import {callApi} from "./axios";
 import endPoints from "./Endpoints";
 import Speciality from "@app/types/Speciality";
@@ -12,10 +13,32 @@ export const listSpecialites = async (): Promise<Speciality[]> => {
   }
 };
 
-export const addSpeciality = async (name: string, proceduralActivities: string[]): Promise<Speciality> => {
+export const addSpeciality = async (speciality: Speciality): Promise<Speciality> => {
   try {
       const response = await callApi(endPoints.addSpeciality, {
-        data: {name, proceduralActivities}
+        data: speciality
+      });
+      return response;
+  } catch (error) {
+    throw error;
+  }
+};
+export const updateSpeciality = async (id: number, speciality: Speciality): Promise<Speciality> => {
+  try {
+      const response = await callApi(endPoints.updateSpeciality, {
+        data: speciality,
+        urlParams: {id}
+      });
+      return response;
+  } catch (error) {
+    throw error;
+  }
+};
+export const addProcedures = async (SpecialityId: number, procedures: ProcedureOption[]): Promise<ProcedureOption[]> => {
+  try {
+      const response = await callApi(endPoints.addProcedures, {
+        urlParams: {id: SpecialityId},
+        data: procedures
       });
       return response;
   } catch (error) {
@@ -23,10 +46,22 @@ export const addSpeciality = async (name: string, proceduralActivities: string[]
   }
 };
 
-export const updateSpeciality = async (id: number, name: string, proceduralActivities: string[]): Promise<Speciality> => {
+
+export const getProcedures = async (specialityId: number): Promise<ProcedureOption[]> => {
   try {
-      const response = await callApi(endPoints.updateSpeciality, {
-        data: {name, proceduralActivities},
+      const response = await callApi(endPoints.getProcedures, {
+        params: {specialityId}
+      });
+      return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const getSpeciality = async (id: number): Promise<Speciality> => {
+  try {
+      const response = await callApi(endPoints.getSpeciality, {
         urlParams: {id}
       });
       return response;

@@ -53,7 +53,21 @@ const endPoints: Record<string, EndpointConfig> = {
             toast: true,
             defaultMessage: "error while updating speciality"
         }
-    },    
+    }, 
+    "getSpeciality": {
+        url: `/specialities/{id}`,
+        method: "GET",
+        requireBody: true,
+        public: false,
+        success: {
+            toast: false,
+            defaultMessage: "Speciality updated sucessfully"
+        },
+        error: {
+            toast: true,
+            defaultMessage: "error while fetching speciality details"
+        }
+    },   
     "deleteSpeciality": {
         url: `/specialities/{id}`,
         method: "DELETE",
@@ -65,6 +79,34 @@ const endPoints: Record<string, EndpointConfig> = {
         error: {
             toast: true,
             defaultMessage: "error while deleting speciality"
+        }
+    },
+    "addProcedures": {
+        url: `/specialities/{id}/procedures`,
+        method: "PUT",
+        requireBody: true,
+        public: false,
+        success: {
+            toast: false,
+            defaultMessage: "Procedures sucessfully"
+        },
+        error: {
+            toast: true,
+            defaultMessage: "error while updating procedures"
+        }
+    },
+    "getProcedures": {
+        url: `/specialities/procedures`,
+        method: "GET",
+        requireBody: false,
+        public: false,
+        success: {
+            toast: false,
+            defaultMessage: "Procedures sucessfully"
+        },
+        error: {
+            toast: true,
+            defaultMessage: "error while fetching procedures"
         }
     },
     "listDocuments": {

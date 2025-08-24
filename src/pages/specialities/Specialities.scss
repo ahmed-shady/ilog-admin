@@ -357,3 +357,39 @@ table.table td a.delete {
     overflow-y: scroll;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////// procedures and sub options ///////////////////////////
+
+.no-caret .dropdown-toggle::before {
+  display: none !important;  /* Hide the dropdown arrow */
+}
+
+.action-dropdown .dropdown-toggle {
+  border-radius: 0;  /* Hide the dropdown arrow */
+}
+
+
+div.procedures button.option-collapse-control.open img{
+    transition: transform 500ms ease; /* Smooth transition for the rotation */
+    -webkit-transition: transform 500ms ease;
+    -ms-transition: transform 500ms ease;
+    transform: rotate(90deg); 
+}
+
+div.procedures button.option-collapse-control img{
+    transition: transform 500ms ease; /* Smooth transition for the rotation */
+    -webkit-transition: transform 500ms ease;
+    -ms-transition: transform 500ms ease;
+    transform: rotate(0); 
+}

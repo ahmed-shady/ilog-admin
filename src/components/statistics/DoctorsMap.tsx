@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import Map, { Marker } from 'react-map-gl';
 import './util/styles.scss'
 import { Country } from '@app/types/Country';
@@ -41,7 +41,7 @@ const DoctorsMap = () => {
   const [map, setMap] = useState<any>();
   const [countries, setCountries] = useState<Country[]>([]);
   const [states, setStates] = useState<CountryState[]>([]);
-
+  const [showMap, setShowMap] = useState(false);
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const navigate = useNavigate();
@@ -109,14 +109,35 @@ const DoctorsMap = () => {
 
 
   return (
+    <div style={{ position: 'relative', width: '100%', height: '500px' }}> 
+      {/* Overlay spinner while map loads */} 
+      {!showMap && ( 
+        <div 
+          style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            background: 'rgba(52, 58, 64, 0.7)', 
+            zIndex: 1000,
+            gap: "10px"
+          }} 
+        > 
+          <span style={{color:"white"}}>Loading</span>
+          <Spinner animation="border" size='sm' role="status" variant="primary"> 
+          </Spinner> 
+        </div> 
+      )} 
     <Map
       {...viewport}  // Spread the viewState to control map position and zoom
       ref={mapRef}
       initialViewState={viewport}
       mapboxAccessToken={MAPBOX_TOKEN}
-      style={{ width: '100%', height: '500px' }}
+      style={{ width: '100%', height: '100%', visibility: showMap?"visible": "hidden" }}
       mapStyle={customMapStyle}  // Use custom map style
       onMove={(evt) => setViewport(evt.viewState)}
+      onLoad={() => {setLoading(false); setShowMap(true);}}
     >
 
       {countries.map((country, i) => (
@@ -192,6 +213,7 @@ const DoctorsMap = () => {
       ))}
 
     </Map>
+    </div>
   );
 };
 

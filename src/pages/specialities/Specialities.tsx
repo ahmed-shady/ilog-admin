@@ -1,27 +1,30 @@
 import { Badge, Button, ButtonGroup, Card, Form, FormLabel, InputGroup, Modal, Table } from 'react-bootstrap';
 import './Specialities.scss'
 import SpecialityForm from './SpecialityForm';
-import { act, useEffect, useState } from 'react';
-import { addSpeciality, deleteSpeciality, listSpecialites, updateSpeciality } from '@app/api/SpecialityService';
+import { useEffect, useState } from 'react';
+import { deleteSpeciality, listSpecialites, updateSpeciality } from '@app/api/SpecialityService';
 import Speciality from '@app/types/Speciality';
 import { Loading } from '@app/components/loading/Loading';
 
 const Specialities = () => {
     const [Specialities, setSpecialities] = useState<Speciality[]>([]);
-    const [currentSepciality, setCurrentSpeciality] = useState<Speciality | null>(null);
+    const [currentSepciality, setCurrentSpeciality] = useState<Speciality | undefined>(undefined);
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setshowConfirmModal] = useState(false);
 
     const [isLoading, setLoading] = useState(true);
 
     const closeAllModals = ()=>{
-      setCurrentSpeciality(null);
+      setCurrentSpeciality(undefined);
       setShowModal(false);
       setshowConfirmModal(false);
     }
     
-    const submitDelete = async (id: number) => {
+    const submitDelete = async (id?: number) => {
       closeAllModals();
+      if(!id){
+        return;
+      }
       setLoading(true);
       try{
         await deleteSpeciality(id);
@@ -32,25 +35,16 @@ const Specialities = () => {
     }
     const submitSpeciality = async (speciality: Speciality, action:string) => {
       if(action === "new"){
-        setLoading(true);
-        try{
-          const newSpeciality = await addSpeciality(speciality.name, speciality.proceduralActivities);
-          setSpecialities([...Specialities, newSpeciality]);
-        }catch(error){
-        }
-        setLoading(false);
-    }else if(action === "edit"){
-      setLoading(true);
-      try{
-        const newSpeciality = await updateSpeciality(speciality.id, speciality.name, speciality.proceduralActivities);
-        var newSpecialities = [...Specialities];
-        const id = newSpecialities.findIndex(s => s.id === newSpeciality.id);
-        newSpecialities[id] = newSpeciality;
+        setSpecialities([...Specialities, speciality]);
+      
+      }else if(action === "edit"){
+        const newSpecialities = [...Specialities];
+        const id = newSpecialities.findIndex(s => s.id === speciality.id);
+        newSpecialities[id] = speciality;
         setSpecialities(newSpecialities);
-      }catch(error){
       }
-      setLoading(false);
-    }
+      setCurrentSpeciality(speciality);
+
   }
     useEffect(() => {
       const fetchData = async () => {
@@ -73,9 +67,9 @@ const Specialities = () => {
 
     return(
       <>
-      {showModal && <SpecialityForm show={showModal} close={closeAllModals} submit = {submitSpeciality} speciality={currentSepciality}/>}
-      {showConfirmModal && currentSepciality != null &&      
-      <Modal show={showConfirmModal} close={closeAllModals}>
+      {showModal && <SpecialityForm show={showModal} close={closeAllModals} submit = {submitSpeciality} currentSpeciality={currentSepciality}/>}
+      {/* @ts-ignore */}
+      {showConfirmModal && (currentSepciality?.id) &&<Modal show={showConfirmModal} close={closeAllModals}>
         {/* @ts-ignore */}
         <Modal.Header closeButton>
           <Modal.Title>Delete Speciality</Modal.Title>
@@ -102,7 +96,7 @@ const Specialities = () => {
           <tr>
             <th className="text-center" scope="col">#</th>
             <th className="text-center" scope="col">Name</th>
-          <th className="text-center" scope="col">Surgical Procedures</th>
+          <th className="text-center" scope="col">Number Of Procdures</th>
             <th className="text-center" scope="col">Actions</th>
           </tr>
         </thead>
@@ -112,7 +106,7 @@ const Specialities = () => {
           <tr className="text-center" key={idx}>
             <th className="text-center" scope="row">{idx}</th>
             <td className="text-cener">{speciality.name}</td>
-            <td className="text-center">{speciality.proceduralActivities?.length || 0}</td>
+            <td className="text-center">{speciality.proceduresCount || 0}</td>
             <td className='text-center'>
                 <ButtonGroup size="sm">
                   <button type="button" title="edit" className="action-btn btn btn-success" onClick={()=>{setCurrentSpeciality(speciality);setShowModal(true);}}><i className="fas fa-edit"></i></button>
