@@ -1,86 +1,86 @@
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import { Form, InputGroup } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import './Requirements.scss'
+import { useFormik } from "formik";
+import { useState } from "react";
+import { Form, InputGroup } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import "./Requirements.scss";
 
+import * as Yup from "yup";
+import DoctorTypeEnum from "@app/types/DoctorTypeEnum";
 
-import * as Yup from 'yup';
-import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
+const RequirementForm = ({ show, requirement, submit, close }: any) => {
+  const x = () => {
+    return useFormik({
+      initialValues: {
+        name: requirement?.name || "",
+        doctorType: requirement?.doctorType || DoctorTypeEnum.TRAINEE,
+        optional: requirement?.optional || false,
+      },
+      validationSchema: Yup.object({
+        name: Yup.string().required("Requirement name is required"),
+        doctorType: Yup.mixed<DoctorTypeEnum>().oneOf(
+          Object.values(DoctorTypeEnum),
+          "Choose a valid option"
+        ),
+      }),
+      onSubmit: (values) => {
+        close();
+        if (requirement) submit({ ...requirement, ...values }, "edit");
+        else submit({ ...values }, "new");
+      },
+    });
+  };
+  const { handleChange, values, handleSubmit, touched, errors } = x();
 
-const RequirementForm = ({show, requirement, submit, close}: any) => {
-
-    
-    const x = () => {
-      return useFormik({
-        initialValues: {
-          name: requirement?.name || '',
-          doctorType: requirement?.doctorType || DoctorTypeEnum.TRAINEE,
-          optional: requirement?.optional || false
-        },
-        validationSchema: Yup.object({
-          name: Yup.string().required('Requirement name is required'),
-          doctorType: Yup.mixed<DoctorTypeEnum>().oneOf(Object.values(DoctorTypeEnum), "Choose a valid option")
-        }),
-        onSubmit: (values) => {
-          close();
-          if(requirement)
-            submit({...requirement, ...values}, "edit");
-        else
-          submit({...values}, "new")
-        }
-      });
-    }
-    const { handleChange, values, handleSubmit, touched, errors } = x();
-  
-    return (
-      <>
+  return (
+    <>
+      {/* @ts-ignore */}
+      <Modal show={show} onHide={close}>
         {/* @ts-ignore */}
-        <Modal show={show} onHide={close}>
-          {/* @ts-ignore */}
-          <Modal.Header closeButton>
-            <Modal.Title>{requirement? 'Edit Requirement': 'Add new Requirement'}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {requirement ? "Edit Requirement" : "Add new Requirement"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <form onSubmit={handleSubmit} id="requirement-form">
-              <InputGroup className="mb-3">
-                <Form.Label className='col-sm-2'>Name</Form.Label>
-                <InputGroup className='col-sm-10'>
-                  <Form.Control
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Requirement name"
-                    onChange={handleChange}
-                    value={values.name}
-                    isValid={touched.name && !errors.name}
-                    isInvalid={touched.name && !!errors.name}
-                  />
-                  {touched.name && errors.name ? (
-                    <Form.Control.Feedback type="invalid">
-                      {/* @ts-ignore */}
-                      {errors.name}
-                    </Form.Control.Feedback>
-                  ) : (
-                    <InputGroup.Append>
-                      <InputGroup.Text>
-                        <i className="fas fa-info-circle" />
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  )}
-                </InputGroup>
+            <InputGroup className="mb-3">
+              <Form.Label className="col-sm-2">Name</Form.Label>
+              <InputGroup className="col-sm-10">
+                <Form.Control
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Requirement name"
+                  onChange={handleChange}
+                  value={values.name}
+                  isValid={touched.name && !errors.name}
+                  isInvalid={touched.name && !!errors.name}
+                />
+                {touched.name && errors.name ? (
+                  <Form.Control.Feedback type="invalid">
+                    {/* @ts-ignore */}
+                    {errors.name}
+                  </Form.Control.Feedback>
+                ) : (
+                  <InputGroup.Append>
+                    <InputGroup.Text>
+                      <i className="fas fa-info-circle" />
+                    </InputGroup.Text>
+                  </InputGroup.Append>
+                )}
               </InputGroup>
-              <InputGroup className="mb-3">
-              <Form.Label className='col-sm-2 align-center'>For</Form.Label>
-              <InputGroup className='col-sm-10'>
-              <select
-                id="doctorType"
-                name="doctorType"
-                className="form-control"
-                onChange={handleChange}
-                value={values.doctorType}
-              >
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <Form.Label className="col-sm-2 align-center">For</Form.Label>
+              <InputGroup className="col-sm-10">
+                <select
+                  id="doctorType"
+                  name="doctorType"
+                  className="form-control"
+                  onChange={handleChange}
+                  value={values.doctorType}
+                >
                   <option value={DoctorTypeEnum.TRAINEE}>Trainee</option>
                   <option value={DoctorTypeEnum.CONSULTANT}>Consultant</option>
                   <option value={DoctorTypeEnum.SPECIALIST}>Specialist</option>
@@ -97,10 +97,10 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
                     </InputGroup.Text>
                   </InputGroup.Append>
                 )}
-                </InputGroup>
               </InputGroup>
+            </InputGroup>
 
-              <InputGroup className="mb-3">
+            {/* <InputGroup className="mb-3">
                 <Form.Label className='col-sm-2 align-center'>Optional</Form.Label>
                 <InputGroup className='col-sm-10'>
                   <Form.Check 
@@ -112,24 +112,25 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
                   onChange={handleChange}
                   />
                 </InputGroup>
-              </InputGroup>
+              </InputGroup> */}
           </form>
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={close}>
-              Close
-            </Button>
-            <Button variant="info" type="submit" className='text-light' form="requirement-form">
-              Save Changes
-            </Button>
-      
-          </Modal.Footer>
-        </Modal>
-        </>
-
-    );
-
-}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={close}>
+            Close
+          </Button>
+          <Button
+            variant="info"
+            type="submit"
+            className="text-light"
+            form="requirement-form"
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
 
 export default RequirementForm;
