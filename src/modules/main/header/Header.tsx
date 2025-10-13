@@ -60,7 +60,7 @@ const Header = ({ containered, ...rest }: { containered?: boolean } & any) => {
             <Link to="/" className="brand-link" style={{ display: 'contents' }}>
               <StyledBrandImage
                 src="/img/logo.JPG"
-                alt="AdminLTE Logo"
+                alt="iLog Logo"
                 width={33}
                 height={33}
                 rounded
@@ -69,7 +69,7 @@ const Header = ({ containered, ...rest }: { containered?: boolean } & any) => {
                 className="brand-text font-weight-light"
                 style={{ color: 'rgba(0, 0, 0, 0.9)' }}
               >
-                AdminLTE 3
+                iLog Admin
               </span>
             </Link>
 

@@ -13,6 +13,7 @@ interface OptionProps {
   onDelete: (id: string) => void;
   onError: (id: string, hasError: boolean) => void;
   onChange?: (id: string, updated: ProcedureOption) => void; // <-- parent-driven state
+  setDirty: (value: boolean) => void;
 }
 
 const Option: React.FC<OptionProps> = ({
@@ -22,6 +23,7 @@ const Option: React.FC<OptionProps> = ({
   onDelete,
   onError,
   onChange,
+  setDirty
 }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(activity?.value ?? "");
@@ -105,6 +107,7 @@ const deleteSubOption = useCallback(
       if (!newOptions.length) setOptionName(undefined);
 
       activity.options = newOptions;
+      setDirty(true);
       return newOptions;
     });
   },
@@ -151,6 +154,7 @@ const closeEditingOptionName = useCallback(() => setEditingOptionName(false), [s
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             const newValue = e.target.value;
             setValue(newValue);
+            setDirty(true);
             activity.value = newValue;
             onChange?.(activity.identifier, { ...activity, value: newValue });
           }}
@@ -207,6 +211,7 @@ const closeEditingOptionName = useCallback(() => setEditingOptionName(false), [s
                   onDelete={deleteSubOption}
                   onError={handleError}
                   onChange={onChange}
+                  setDirty={setDirty}
                 />
               ))}
             </div>

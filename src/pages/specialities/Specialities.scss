@@ -353,10 +353,27 @@ table.table td a.delete {
 ///////////////form////////////////////////
 #speciality-form{
   div.procedures{
-    max-height: 50vh;
+    max-height: 40vh;
     overflow-y: scroll;
   }
 }
+
+.target-types-container{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 5px;
+  .scientific{
+    color: #eee;
+    background-color: #4DCBDF;
+  }
+  .procedural{
+    color: #eee;
+    background-color: #7A6CE8;
+  }
+}
+
 
 
 
