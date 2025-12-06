@@ -6,16 +6,16 @@
 @mixin toast-variant($name, $color) {
   #{if(&, '&.bg-#{$name}','.bg-#{$name}')} {
     background-color: rgba($color, 0.9) !important;
-    @if (color-yiq($color) == $yiq-text-light) {
-      .close {
-        color: color-yiq($color);
+    @if (color-contrast($color) == $color-contrast-light) {
+      .close, .btn-close {
+        color: color-contrast($color);
         text-shadow: 0 1px 0 $black;
       }
     }
 
     .toast-header {
       background-color: rgba($color, 0.85);
-      color: color-yiq($color);
+      color: color-contrast($color);
     }
   }
 }

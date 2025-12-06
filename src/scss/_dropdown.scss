@@ -58,7 +58,14 @@
   position: relative;
 
   > a::after {
-    @include caret-right ();
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid transparent;
+    border-right: 0;
+    border-bottom: .3em solid transparent;
+    border-left: .3em solid;
     float: right;
     margin-left: .5rem;
     margin-top: .5rem;

@@ -69,10 +69,10 @@
     .info-box {
       .bg-#{$name},
       .bg-gradient-#{$name} {
-        color: color-yiq($color);
+        color: color-contrast($color);
 
         .progress-bar {
-          background-color: color-yiq($color);
+          background-color: color-contrast($color);
         }
       }
     }
@@ -154,10 +154,10 @@
       .info-box {
         .bg-#{$name},
         .bg-gradient-#{$name} {
-          color: color-yiq($color);
+          color: color-contrast($color);
 
           .progress-bar {
-            background-color: color-yiq($color);
+            background-color: color-contrast($color);
           }
         }
       }

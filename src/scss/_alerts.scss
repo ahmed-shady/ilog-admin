@@ -25,26 +25,56 @@
 //Alert Variants
 @each $color, $value in $theme-colors {
   .alert-#{$color} {
-    color: color-yiq($value);
+    color: color-contrast($value);
     background-color: $value;
     border-color: darken($value, 5%);
   }
 
   .alert-default-#{$color} {
-    @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+    // Bootstrap 5: Manually create alert variant styles
+    $alert-background: mix($value, $white, 15%);
+    $alert-border: mix($value, $white, 30%);
+    $alert-color: mix($value, $black, 75%);
+    
+    color: $alert-color;
+    background-color: $alert-background;
+    border-color: $alert-border;
+    
+    hr {
+      border-top-color: darken($alert-border, 5%);
+    }
+    
+    .alert-link {
+      color: darken($alert-color, 10%);
+    }
   }
 }
 
 @include dark-mode () {
   @each $color, $value in $theme-colors-alt {
     .alert-#{$color} {
-      color: color-yiq($value);
+      color: color-contrast($value);
       background-color: $value;
       border-color: darken($value, 5%);
     }
 
     .alert-default-#{$color} {
-      @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+      // Bootstrap 5: Manually create alert variant styles
+      $alert-background: mix($value, $white, 15%);
+      $alert-border: mix($value, $white, 30%);
+      $alert-color: mix($value, $black, 75%);
+      
+      color: $alert-color;
+      background-color: $alert-background;
+      border-color: $alert-border;
+      
+      hr {
+        border-top-color: darken($alert-border, 5%);
+      }
+      
+      .alert-link {
+        color: darken($alert-color, 10%);
+      }
     }
   }
 }

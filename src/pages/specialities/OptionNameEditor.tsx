@@ -58,11 +58,9 @@ const OptionNameEditor = ({ optionName, numberOfOptions, submit, close }: any) =
                     {errors.optionName}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-briefcase" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-briefcase" />
+                  </InputGroup.Text>
                 )}
               </InputGroup>
             </div>
@@ -86,11 +84,9 @@ const OptionNameEditor = ({ optionName, numberOfOptions, submit, close }: any) =
                     {errors.numberOfOptions}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-briefcase" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-briefcase" />
+                  </InputGroup.Text>
                 )}
               </InputGroup>
             </div>

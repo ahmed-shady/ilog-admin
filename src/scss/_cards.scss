@@ -235,7 +235,8 @@ html.maximized-card {
       margin-top: -$card-spacer-y * .4;
     }
 
-    [data-toggle="tooltip"] {
+    [data-toggle="tooltip"],
+    [data-bs-toggle="tooltip"] {
       position: relative;
     }
   }
@@ -407,7 +408,7 @@ html.maximized-card {
 
     // Tools and options box
     .tools {
-      color: theme-color("danger");
+      color: $danger;
       display: none;
       float: right;
 

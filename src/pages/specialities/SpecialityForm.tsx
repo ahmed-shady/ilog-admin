@@ -193,11 +193,9 @@ const SpecialityForm: React.FC<FormProps> = ({ show, currentSpeciality, submit, 
                   value={name}
                   isInvalid={!name}
                 />
-                <InputGroup.Append>
-                  <InputGroup.Text>
-                    <i className="fas fa-briefcase" />
-                  </InputGroup.Text>
-                </InputGroup.Append>
+                <InputGroup.Text>
+                  <i className="fas fa-briefcase" />
+                </InputGroup.Text>
                 <Form.Control.Feedback type="invalid">
                   Name is required
                 </Form.Control.Feedback>
@@ -222,11 +220,9 @@ const SpecialityForm: React.FC<FormProps> = ({ show, currentSpeciality, submit, 
                     getOptionValue={(option) => option.value}
                   />
 
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-bars" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-bars" />
+                  </InputGroup.Text>
                 </div>
                 {!(targetTypes.length) && (
                   <Form.Control.Feedback type="invalid" className='d-block'>

@@ -7,7 +7,7 @@
   .nav-sidebar > .nav-item {
     > .nav-link.active {
       background-color: $color;
-      //color: color-yiq($color);
+      //color: color-contrast($color);
       color: white;
     }
   }
