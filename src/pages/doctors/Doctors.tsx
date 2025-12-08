@@ -12,14 +12,10 @@ import DoctorTypeBadge from './DoctorTypeBadge';
 import UserSummary from './UserSummary';
 import { deleteUser, suspendUser, unsuspendUser } from '@app/api/UsersService';
 import DoctorsFilter from './DoctorsFilter';
-import TopDoctors from './TopDoctors';
 import { DoctorFilterDto } from '@app/types/DoctorFilterDto';
 import { useLocation } from 'react-router-dom';
-import { formatDateTime } from '@app/utils/DateUtil';
 import { useTranslation } from 'react-i18next';
 import ColValueFormatter from './ColValueFormatter';
-import SortingColumn from './SortingColumn';
-import SortDirEnum from '@app/types/SortDirEnum';
 
 interface Confirmation {
   title?: string
@@ -342,7 +338,7 @@ const Doctors = () => {
                     <td>
                       <DoctorTypeBadge type={doctor.type} />
                     </td>
-                    <td>{doctor.speciality.name}</td>
+                    <td>{doctor.speciality?.name || "-"}</td>
                     <td>
                       <small>
                         {doctor.state && <ColValueFormatter value={doctor.state + ", "} highlight={filterDto.query} />}
