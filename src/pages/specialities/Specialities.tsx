@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Card, Modal } from 'react-bootstrap';
+import { Badge, Button, ButtonGroup, Card, Modal, Table } from 'react-bootstrap';
 import './Specialities.scss'
 import SpecialityForm from './SpecialityForm';
 import { useEffect, useState } from 'react';
@@ -96,7 +96,7 @@ const Specialities = () => {
             </p>
             <Button variant="info" className="new-btn text-light" title="add new speciality" onClick={() => setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
           </div>
-          <table className="table table-bordered table-striped table-responsive-sm">
+          <Table bordered striped responsive>
             <thead>
               <tr>
                 <th className="text-center" scope="col">#</th>
@@ -129,7 +129,7 @@ const Specialities = () => {
               }
 
             </tbody>
-          </table>
+          </Table>
         </Card.Body>
       </Card>
 

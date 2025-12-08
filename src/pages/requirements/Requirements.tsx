@@ -107,12 +107,12 @@ const Requirements = () => {
       <Card.Body>
       <div className="d-flex justify-content-end">
         <Button variant="info" className="new-btn text-light" title="add new requirement" onClick={()=>setShowModal(true)}>New <i className="fas fa-plus"></i></Button>
-</div>
-        <table className="table table-bordered table-responsive-sm requirements-table">
-        <thead>
-          <tr>
-            <th className="text-center" scope="col">#</th>
-            <th className="text-center" scope="col">Name</th>
+      </div>
+        <Table bordered responsive striped className="requirements-table">
+          <thead>
+            <tr>
+              <th className="text-center" scope="col">#</th>
+              <th className="text-center" scope="col">Name</th>
             <th className="text-center" scope="col">User Type</th>
             <th className="text-center" scope="col">Actions</th>
           </tr>
@@ -122,36 +122,25 @@ const Requirements = () => {
         {requirements.map((requirement,idx) => (
           <>
           <tr   
-            data-even={idx % 2 === 0 || undefined}
-            data-odd={idx % 2 !== 0 || undefined}
             className="text-center"
             key={idx}
           >
-            <th rowSpan={2} className="text-center" scope="row">{idx}</th>
+            <th className="text-center" scope="row">{idx}</th>
             <td  className="text-cener">{requirement.name}</td>
-            <td rowSpan={2}  className="text-center">{DOCTOR_TYPES_TEXT[requirement.doctorType]}</td>
-            <td  rowSpan={2} className='text-center'>
+            <td className="text-center">{DOCTOR_TYPES_TEXT[requirement.doctorType]}</td>
+            <td className='text-center'>
                 <ButtonGroup size="sm">
                   <button type="button" title="edit" className="action-btn btn btn-success" onClick={()=>{setCurrentRequirement(requirement);setShowModal(true);}}><i className="fas fa-edit"></i></button>
                   <button type="button" title="delete" className="action-btn btn btn-danger" onClick={()=>{setCurrentRequirement(requirement); setshowConfirmModal(true);}}><i className="far fa-trash-alt"></i></button>
                 </ButtonGroup>
             </td>
           </tr>
-            <tr
-            data-even={idx % 2 === 0 || undefined}
-            data-odd={idx % 2 !== 0 || undefined}
-            className="text-center"
-            key={idx+1}
-            >
-            <td  className="text-cener">{requirement.name}</td>
-
-          </tr>
           </>
         ))
         }
           
         </tbody>
-      </table>
+      </Table>
       </Card.Body>
     </Card>
 
