@@ -1,9 +1,9 @@
 import DoctorTypeEnum from "@app/types/DoctorTypeEnum";
 
-const DOCTOR_TYPES_TEXT: any = {};
-
-DOCTOR_TYPES_TEXT[DoctorTypeEnum.TRAINEE] = "Trainee";
-DOCTOR_TYPES_TEXT[DoctorTypeEnum.CONSULTANT] = "Consultant";
-DOCTOR_TYPES_TEXT[DoctorTypeEnum.SPECIALIST] = "Specialist";
-
+const DOCTOR_TYPES_TEXT: Record<DoctorTypeEnum, string> = {
+    [DoctorTypeEnum.TRAINEE] : "Trainee",
+    [DoctorTypeEnum.CONSULTANT] : "Consultant",
+    [DoctorTypeEnum.SPECIALIST] : "Specialist",
+    [DoctorTypeEnum.HOSPITAL] : "Hospital"
+}
 export default DOCTOR_TYPES_TEXT;

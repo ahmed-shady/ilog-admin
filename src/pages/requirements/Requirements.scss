@@ -7,6 +7,12 @@ container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
     margin-left: auto;
 }
 
+.table.requirements-table{
+  [data-even] {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
 .table-responsive {
     display: block;
     width: 100%;

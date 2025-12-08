@@ -14,7 +14,7 @@ const SubMenu = () => {
                   type="button"
                   className="btn btn-tool"
                   data-widget="collapse"
-                  data-toggle="tooltip"
+                  data-bs-toggle="tooltip"
                   title="Collapse"
                 >
                   <i className="fa fa-minus" />
@@ -23,7 +23,7 @@ const SubMenu = () => {
                   type="button"
                   className="btn btn-tool"
                   data-widget="remove"
-                  data-toggle="tooltip"
+                  data-bs-toggle="tooltip"
                   title="Remove"
                 >
                   <i className="fa fa-times" />

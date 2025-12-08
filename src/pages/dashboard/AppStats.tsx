@@ -22,8 +22,7 @@ const AppStats = () => {
     }, []);
     return (
         <>
-            <h4 className='m-2 font-weight-bold'>Application Stats</h4>
-            <div className="row">
+            <div className="row g-3">
                 <div className="col-lg-3 col-6">
                     <SmallBox
                         title="Registered Doctors"

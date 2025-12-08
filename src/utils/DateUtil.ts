@@ -20,3 +20,8 @@ export const formatDate = (datetime: Date): string => {
     });
     return formattedDate;
 }
+
+
+export const getLocalTimeZoneOffset = (): number => {
+  return new Date().getTimezoneOffset() / (-60);
+}

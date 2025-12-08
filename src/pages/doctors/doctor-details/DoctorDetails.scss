@@ -1,0 +1,169 @@
+// ============================================
+// Doctor Details Offcanvas Styles
+// ============================================
+
+.doctor-details-offcanvas {
+  width: 450px !important;
+  
+  @media (max-width: 768px) {
+    width: 380px !important;
+  }
+  
+  @media (max-width: 576px) {
+    width: 100% !important;
+  }
+
+  .offcanvas-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    
+    .btn-close {
+      filter: brightness(0) invert(1);
+    }
+    
+    .offcanvas-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+  }
+
+  .doctor-profile-header {
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    
+    .doctor-profile-image {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+    
+    h4 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+    }
+    
+    .badge {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .offcanvas-body {
+    background-color: #f8f9fa;
+    
+    .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      }
+      
+      .card-header {
+        background-color: transparent;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
+        
+        h6 {
+          font-size: 1rem;
+          font-weight: 600;
+        }
+      }
+      
+      .card-body {
+        padding: 1.25rem;
+        
+        .row {
+          align-items: center;
+          
+          &:not(:last-child) {
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e9ecef;
+          }
+          
+          small {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          strong {
+            font-size: 0.9375rem;
+            color: #2c3e50;
+          }
+        }
+      }
+    }
+  }
+
+  .offcanvas-footer {
+    background-color: #fff;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+    
+    .btn {
+      font-weight: 500;
+      padding: 0.625rem 1.25rem;
+      transition: all 0.2s ease;
+      
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      i {
+        font-size: 0.875rem;
+      }
+    }
+    
+    .btn-outline-success,
+    .btn-outline-danger,
+    .btn-outline-warning {
+      border-width: 2px;
+      
+      &:hover:not(:disabled) {
+        border-width: 2px;
+      }
+    }
+  }
+}
+
+// Badge animations
+.badge {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Card entrance animation
+.card {
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

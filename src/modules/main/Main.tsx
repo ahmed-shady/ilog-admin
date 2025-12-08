@@ -12,6 +12,7 @@ import MenuSidebar from './menu-sidebar/MenuSidebar';
 import { styled } from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { Loading } from '@app/components/loading/Loading';
+import './main.scss';
 
 const MENU_WIDTH = 250;
 

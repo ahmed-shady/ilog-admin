@@ -1,8 +1,11 @@
 import EndpointConfig from "@app/types/EndpointConfig";
+import { getLocalTimeZoneOffset } from "@app/utils/DateUtil";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BASE_URL = "https://api.ilog-app.com";
+// export const BASE_URL = "http://localhost:8080/api";
+
 export const DIRECT_BASE_URL = "https://direct.ilog-app.com";
 
 
@@ -57,8 +60,14 @@ export const callApi = (endpoint: EndpointConfig, config: any, checkCb?: any): a
 }
 
 const constructHeaders = (endPoint: EndpointConfig) => {
+  const headers: any = {};
   if(!endPoint.public){
-    return {"Authorization": `Bearer ${localStorage.getItem("token")}`}
+    const token = localStorage.getItem("token");
+    if(!token){
+      window.location.replace("/login");
+    }
+    headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
   }
-  return {};
+  headers["Time-Zone-Offset"] = getLocalTimeZoneOffset();
+  return headers;
 }

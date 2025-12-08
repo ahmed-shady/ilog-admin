@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import Map, { Marker } from 'react-map-gl';
 import './util/styles.scss'
 import { Country } from '@app/types/Country';
@@ -7,7 +7,7 @@ import { CountryState } from '@app/types/CountryState';
 import { worldCenter } from './util/MapOptions';
 import { useNavigate } from 'react-router-dom';
 import { doctorsStatisticsPerCountry, doctorsStatisticsPerCountryState } from '@app/api/StatisticsServic';
-import { count } from 'console';
+import MapPopup from './MapPopup';
 
 // Your Mapbox token
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiYWJvc2hhZHk0MDQiLCJhIjoiY20wbXlrenNsMDExbDJrc2FxZDNxMWtxbSJ9.bUTleZ3FaohIaUIM-STMqg';
@@ -30,10 +30,17 @@ const markers = [
   { id: 2, coords: [29.9187, 31.2001], label: 'Alexandria' }
 ];
 
-// Custom style to hide all labels
-const customMapStyle = 'mapbox://styles/aboshady404/cm102c3kr01cu01qydkm0hix3';  // Use default Mapbox style
+// Map styles
+const MAP_STYLES = {
+  light: 'mapbox://styles/aboshady404/cm102c3kr01cu01qydkm0hix3',
+  dark: 'mapbox://styles/aboshady404/cm1016vq301cw01o3fobwbn7v'
+};
 
-const DoctorsMap = () => {
+interface DoctorsMapProps {
+  mapStyle?: 'light' | 'dark';
+}
+
+const DoctorsMap: React.FC<DoctorsMapProps> = ({ mapStyle = 'light' }) => {
   const [selected, setSelected] = React.useState<Country | null>(null);
   const [selectedState, setSelectedState] = useState<CountryState | null>(null);
   const [openedCountry, setOpenedCountry] = useState<Country | null>(null);
@@ -44,6 +51,7 @@ const DoctorsMap = () => {
   const [showMap, setShowMap] = useState(false);
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
+  const [countriesImagesLoaded, setCountriesImagesLoaded] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
 
   const [viewport, setViewport] = useState(worldCenter);
@@ -58,6 +66,10 @@ const DoctorsMap = () => {
         setLoading(false);
       })
   }, []);
+
+  const onCountryImageLoaded = (country: Country): void =>{
+    setCountriesImagesLoaded(prev => ({...prev, [country.code]: true}));
+  }
 
   const countryClick = async () => {
     if (!selected)
@@ -135,52 +147,52 @@ const DoctorsMap = () => {
       initialViewState={viewport}
       mapboxAccessToken={MAPBOX_TOKEN}
       style={{ width: '100%', height: '100%', visibility: showMap?"visible": "hidden" }}
-      mapStyle={customMapStyle}  // Use custom map style
+      mapStyle={MAP_STYLES[mapStyle]}  // Use dynamic map style
       onMove={(evt) => setViewport(evt.viewState)}
       onLoad={() => {setLoading(false); setShowMap(true);}}
     >
-
       {countries.map((country, i) => (
         <Marker
-          key={country.id}
           longitude={country.longitude}
           latitude={country.latitude}
           anchor="bottom"
           
         >
-          {!selected && !selectedState && <img src="img/map-marker.svg" style={{ cursor: "pointer", width: "40px", height: "auto" }} onClick={() => setSelected(country)} />}
+          {!selected && !selectedState && 
+          <>
+          {!countriesImagesLoaded[country.code] && 
+            <img 
+              className="map-country-marker" 
+              onClick={() => setSelected(country)}
+              src={'img/map-marker.svg'}
+              
+            />
+          }
+          <img 
+            className="map-country-marker" 
+            onClick={() => setSelected(country)}
+            src={country.image}
+            style={{display: countriesImagesLoaded[country.code]? "block": "none"}}
+            onLoad={() => onCountryImageLoaded(country)}
+          />
+          </>
+          }
           {selected?.id === country.id &&
-            <div style={{ width: '100px', textAlign: "center", color: '#333', fontWeight: 'bold', fontSize: "16px", backgroundColor: 'white' }} className='shadow shadow-lg p-1 rounded'>
-              <button type="button" className="close filters-close" onClick={close}>
-                <span aria-hidden="true">×</span>
-                <span className="sr-only">Close</span>
-              </button>
-              <h6 className="text-center">{country.name}</h6>
-              <h6>{country.doctorsCount} doctors</h6>
-              <div className='d-flex justify-content-between'>
-              <Button className="btn btn-secondary"
-                style={{ fontSize: "80%", padding: "2px", margin: "0 auto" }}
-                size="sm"
-                onClick={countryClick}
-              >
-                states
-              </Button>
-
-              <Button className="btn btn-primary"
-                style={{ fontSize: "80%", padding: "2px", margin: "0 auto" }}
-                size="sm"
-                onClick={countryClick2}
-              >
-                details
-              </Button>
-              </div>
-            </div>}
+            <MapPopup
+              title={country.name}
+              count={country.doctorsCount || 0}
+              type="country"
+              onClose={close}
+              onStates={countryClick}
+              onDetails={countryClick2}
+            />}
         </Marker>
       ))}
 
 
-      {states.map((state, index) => (<Fragment key={state.id}>
+      {states.map((state, index) => (
         <Marker
+          key={state.id}
           longitude={state.longitude || openedCountry?.longitude || 0}
           latitude={state.latitude || openedCountry?.latitude || 0}
           anchor="bottom"
@@ -188,29 +200,18 @@ const DoctorsMap = () => {
         {!selectedState && !selected && <img src="img/map-marker-green.svg" style={{ cursor: "pointer", width: "30px", height: "auto", zIndex: 0 }} onClick={() => {setSelectedState(state)}}/>}
 
         {(selectedState?.id === state.id) &&
-          <div style={{ width: '100px', textAlign: "center", color: '#333', fontWeight: 'bold', fontSize: "16px", backgroundColor: 'white', zIndex: 1000 }}
-            className='shadow shadow-lg p-1 rounded z-1'
-          >
-            <button type="button" className="close filters-close" onClick={close}>
-              <span aria-hidden="true">×</span>
-              <span className="sr-only">Close</span>
-            </button>
-            <h6 className="text-center">{state.name}</h6>
-            <h6>{state.doctorsCount} doctors</h6>
-            <Button className="btn btn-primary"
-              style={{ fontSize: "80%", padding: "2px", margin: "0 auto" }}
-              size="sm"
-              onClick={stateClick}
-            >
-              details
-            </Button>
-          </div>
+          <MapPopup
+            title={state.name}
+            count={state.doctorsCount || 0}
+            type="state"
+            onClose={close}
+            onDetails={stateClick}
+          />
         }
 
                 </Marker>
 
-      </Fragment>
-      ))}
+      ))}      
 
     </Map>
     </div>

@@ -108,11 +108,9 @@ const Login = () => {
                     {errors.email}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
+                  <InputGroup.Text>
                       <i className="fas fa-envelope" />
                     </InputGroup.Text>
-                  </InputGroup.Append>
                 )}
               </InputGroup>
             </div>
@@ -133,11 +131,9 @@ const Login = () => {
                     {errors.password}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
+                  <InputGroup.Text>
                       <i className="fas fa-lock" />
                     </InputGroup.Text>
-                  </InputGroup.Append>
                 )}
               </InputGroup>
             </div>
@@ -192,3 +188,4 @@ const Login = () => {
 };
 
 export default Login;
+

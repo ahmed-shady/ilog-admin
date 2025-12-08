@@ -111,11 +111,9 @@ const Register = () => {
                     {errors.email}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-envelope" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-envelope" />
+                  </InputGroup.Text>
                 )}
               </InputGroup>
             </div>
@@ -136,11 +134,9 @@ const Register = () => {
                     {errors.password}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-lock" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-lock" />
+                  </InputGroup.Text>
                 )}
               </InputGroup>
             </div>
@@ -163,11 +159,9 @@ const Register = () => {
                     {errors.passwordRetype}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-lock" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-lock" />
+                  </InputGroup.Text>
                 )}
               </InputGroup>
             </div>

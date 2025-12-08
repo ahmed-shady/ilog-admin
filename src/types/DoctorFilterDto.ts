@@ -1,4 +1,5 @@
 import DoctorTypeEnum from "./DoctorTypeEnum";
+import SortDirEnum from "./SortDirEnum";
 
 export interface DoctorFilterDto{
     name?: string,
@@ -7,5 +8,8 @@ export interface DoctorFilterDto{
     states?: string[],
     verified?: boolean,
     hasPendingDocuments?: boolean,
-    types?: DoctorTypeEnum[]
+    types?: DoctorTypeEnum[],
+    query?: string,
+    sortBy?: string,
+    sortDir?: SortDirEnum
 }

@@ -1,15 +1,13 @@
 import { Badge, Button, ButtonGroup, Card, Dropdown, DropdownButton, Form, InputGroup, Modal, Pagination, Table } from 'react-bootstrap';
 import './Doctors.scss'
-import React, { act, useEffect, useMemo, useRef, useState } from 'react';
+import { act, useEffect, useMemo, useRef, useState } from 'react';
 import { Loading } from '@app/components/loading/Loading';
 
 import { searchDoctors, unverifyDoctor, verifyDoctor } from '@app/api/DoctorsService';
 import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
 import Doctor from '@app/types/Doctor';
-import DoctorDetails from './doctor-details';
-import DoctorsDocuments from './doctors-documents';
-import DoctorTypeBadge from './DoctorTypeBadge';
-import UserSummary from './UserSummary';
+import DoctorDetails from './DoctorDetails';
+import DoctorsDocuments from './DoctorsDocuments';
 import { deleteUser, suspendUser, unsuspendUser } from '@app/api/UsersService';
 import DoctorsFilter from './DoctorsFilter';
 import TopDoctors from './TopDoctors';
@@ -42,8 +40,6 @@ const Doctors = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [filterDto, setFilterDto] = useState<DoctorFilterDto>(location.state || {});
   const [searchValue, setSearchValue] = useState<string>();
-  const [sortColumn, setSortColumn] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(null);
   const [t] = useTranslation();
 
   const closeAllModals = () => {
@@ -175,47 +171,6 @@ const Doctors = () => {
     }
     return false;
   }, [filterDto]);
-
-  const handleSort = (column: string) => {
-    if (sortColumn === column) {
-      // Toggle direction: asc -> desc -> null
-      if (sortDirection === 'asc') {
-        setSortDirection('desc');
-      } else if (sortDirection === 'desc') {
-        setSortColumn(null);
-        setSortDirection(null);
-      }
-    } else {
-      // New column, start with asc
-      setSortColumn(column);
-      setSortDirection('asc');
-    }
-    
-    // TODO: Call your API with sortColumn and sortDirection
-    // loadData(0, column, direction);
-  };
-
-  const SortableHeader = ({ column, children }: { column: string; children: React.ReactNode }) => {
-    const isActive = sortColumn === column;
-    const direction = isActive ? sortDirection : null;
-    
-    return (
-      <th 
-        className={`sortable-header ${isActive ? 'active' : ''}`}
-        onClick={() => handleSort(column)}
-      >
-        <div className="sortable-header-content">
-          <span>{children}</span>
-          <span className="sort-icons">
-            {!direction && <i className="fas fa-sort text-muted"></i>}
-            {direction === 'asc' && <i className="fas fa-sort-up text-primary"></i>}
-            {direction === 'desc' && <i className="fas fa-sort-down text-primary"></i>}
-          </span>
-        </div>
-      </th>
-    );
-  };
-
   return (
     <div onClick={handleClickOutside}>
       {showDetailsModal && currentDoctor && <DoctorDetails show={showDetailsModal} doctor={currentDoctor} close={closeAllModals} toggleVerify={toggleVerify} showDocuments={showDocuments} actionLoading={actionLoading} />}
@@ -307,12 +262,12 @@ const Doctors = () => {
               <thead className="table-light">
                 <tr>
                   <th style={{width: '50px'}}>#</th>
-                  <SortableHeader column="name">Name</SortableHeader>
-                  <SortableHeader column="email">Email</SortableHeader>
-                  <SortableHeader column="type">Type</SortableHeader>
-                  <SortableHeader column="speciality">Speciality</SortableHeader>
-                  <SortableHeader column="location">Location</SortableHeader>
-                  <SortableHeader column="hospital">Hospital</SortableHeader>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Type</th>
+                  <th>Speciality</th>
+                  <th>Location</th>
+                  <th>Hospital</th>
                   <th style={{width: '100px'}} className="text-center">Status</th>
                   <th style={{width: '150px'}} className="text-center">Actions</th>
                 </tr>
@@ -323,15 +278,20 @@ const Doctors = () => {
                     <td className="text-muted">{currentPage * 15 + idx + 1}</td>
                     <td>
                       <div className="d-flex align-items-center gap-2">
-                        <UserSummary 
-                          name={doctor.name}
-                          profileImage={doctor.profileImage}
-                          registeredAt={doctor.registeredAt}
-                          highlight={filterDto.query}
-                        />
-                        {doctor.verified && (
-                          <i className="fas fa-check-circle text-success" title="Verified"></i>
-                        )}
+                        <div className="text-primary">
+                          <i className="fas fa-user-circle fa-lg"></i>
+                        </div>
+                        <div>
+                          <div className="fw-semibold">
+                            <ColValueFormatter value={doctor.name} highlight={filterDto.query} />
+                            {doctor.verified && (
+                              <i className="fas fa-check-circle text-success ms-1" title="Verified"></i>
+                            )}
+                          </div>
+                          <small className="text-muted">
+                            {formatDateTime(new Date(doctor.registeredAt))}
+                          </small>
+                        </div>
                       </div>
                     </td>
                     <td>
@@ -340,7 +300,12 @@ const Doctors = () => {
                       </small>
                     </td>
                     <td>
-                      <DoctorTypeBadge type={doctor.type} />
+                      <Badge 
+                        bg={doctor.type === DoctorTypeEnum.CONSULTANT ? 'primary' : 'info'} 
+                        className="px-2 py-1"
+                      >
+                        {t(`doctors.types.${doctor.type.toLowerCase()}`)}
+                      </Badge>
                     </td>
                     <td>{doctor.speciality.name}</td>
                     <td>
@@ -414,7 +379,13 @@ const Doctors = () => {
               </tbody>
             </Table>
 
-            {doctors.length === 0 && !isLoading && <NoDoctorsFound />}
+            {doctors.length === 0 && !isLoading && (
+              <div className="text-center py-5">
+                <i className="fas fa-user-md fa-3x text-muted mb-3"></i>
+                <h5 className="text-muted">No doctors found</h5>
+                <p className="text-muted">Try adjusting your search or filters</p>
+              </div>
+            )}
           </div>
 
           {/* Pagination */}
@@ -484,13 +455,5 @@ const Doctors = () => {
 }
 
 
-
-const NoDoctorsFound = React.memo(() => {
-  return <div className="text-center py-5">
-            <i className="fas fa-user-md fa-3x text-muted mb-3"></i>
-            <h5 className="text-muted">No doctors found</h5>
-            <p className="text-muted">Try adjusting your search or filters</p>
-          </div>;
-});
 
 export default Doctors;

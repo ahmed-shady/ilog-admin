@@ -39,28 +39,28 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-user-md nav-icon',
     path: '/doctors',
   },
+  // {
+  //   name: i18n.t('menusidebar.label.messages'),
+  //   icon: 'fas fa-envelope nav-icon',
+  //   path: '/contactus-messages',
+  // },
   {
     name: i18n.t('menusidebar.label.messages'),
-    icon: 'fas fa-envelope nav-icon',
-    path: '/contactus-messages',
-  },
-  // {
-  //   name: i18n.t('menusidebar.label.mainMenu'),
-  //   icon: 'far fa-caret-square-down nav-icon',
-  //   children: [
-  //     {
-  //       name: i18n.t('menusidebar.label.subMenu'),
-  //       icon: 'fas fa-hammer nav-icon',
-  //       path: '/sub-menu-1',
-  //     },
+    icon: 'fas fa-user-lock nav-icon',
+    children: [
+      {
+        name: i18n.t('menusidebar.label.contactUs'),
+        icon: 'fas fa-envelope-open nav-icon',
+        path: '/contactus-messages',
+      },
 
-  //     {
-  //       name: i18n.t('menusidebar.label.blank'),
-  //       icon: 'fas fa-cogs nav-icon',
-  //       path: '/sub-menu-2',
-  //     },
-  //   ],
-  // },
+      {
+        name: i18n.t('menusidebar.label.ProceduresSuggestions'),
+        icon: 'fas fa-l nav-icon',
+        path: '/contactus-messagesd'
+      },
+    ],
+  },
 ];
 
 const StyledBrandImage = styled(Image)`
@@ -87,7 +87,7 @@ const MenuSidebar = () => {
       <Link to="/" className="brand-link">
         <StyledBrandImage
           src="img/logo.JPG"
-          alt="AdminLTE Logo"
+          alt="iLog Logo"
           width={33}
           height={33}
           rounded

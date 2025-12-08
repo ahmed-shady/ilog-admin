@@ -76,8 +76,8 @@ const Header = ({ containered, ...rest }: { containered?: boolean } & any) => {
             <button
               className="navbar-toggler order-1"
               type="button"
-              data-toggle="collapse"
-              data-target="#navbarCollapse"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
               aria-controls="navbarCollapse"
               aria-expanded="false"
               aria-label="Toggle navigation"

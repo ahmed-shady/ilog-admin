@@ -28,8 +28,7 @@ const Profile = () => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  if(true)
-  return <h3>Coming soon...</h3>;
+
   return (
     <>
       <ContentHeader title="Profile" />

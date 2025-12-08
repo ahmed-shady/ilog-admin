@@ -61,11 +61,9 @@ const RecoverPassword = () => {
                     {errors.password}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
+                  <InputGroup.Text>
                       <i className="fas fa-lock" />
                     </InputGroup.Text>
-                  </InputGroup.Append>
                 )}
               </InputGroup>
             </div>
@@ -88,11 +86,9 @@ const RecoverPassword = () => {
                     {errors.confirmPassword}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
+                  <InputGroup.Text>
                       <i className="fas fa-lock" />
                     </InputGroup.Text>
-                  </InputGroup.Append>
                 )}
               </InputGroup>
             </div>
@@ -112,3 +108,4 @@ const RecoverPassword = () => {
 };
 
 export default RecoverPassword;
+

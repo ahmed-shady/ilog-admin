@@ -1,0 +1,311 @@
+// ============================================
+// Doctors Documents Modal Styles
+// ============================================
+
+#document-modal {
+  .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  // Fixed modal body height - optimized for desktop viewport
+  .modal-body {
+    min-height: 550px; // Reduced height to fit desktop screens
+    max-height: 550px;
+    overflow-y: auto; // Allow scrolling if content is too tall
+  }
+
+  // Header styles
+  .modal-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    h5 {
+      color: white;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .text-muted {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .status-badge {
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Body - Document Viewer (Fixed Size - optimized for desktop)
+  .document-viewer {
+    position: relative;
+    height: 350px; // Reduced height to fit screen better
+    min-height: 350px;
+    max-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    overflow: hidden; // Prevent overflow
+
+    .document-image {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+
+    .alert {
+      max-width: 400px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      i {
+        color: #ffc107;
+      }
+    }
+  }
+
+  // Footer - more compact
+  .document-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+  }
+}
+
+// Action Pane
+.action-pane {
+  width: 100%;
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    .action-btn {
+      flex: 1;
+      max-width: 250px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .rejection-form {
+    .alert {
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+
+      .input-group-text {
+        background: white;
+        border: none;
+        color: #667eea;
+      }
+
+      .form-control {
+        border: none;
+        padding: 0.75rem;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .btn {
+        border: none;
+        padding: 0.75rem 1.25rem;
+        font-weight: 500;
+
+        &:hover:not(:disabled) {
+          transform: scale(1.02);
+        }
+      }
+    }
+  }
+}
+
+// Documents Gallery (Fixed Height - compact for desktop)
+.documents-gallery {
+  width: 100%;
+  border-top: 2px solid #dee2e6;
+  padding-top: 0.75rem;
+  max-height: 130px; // Reduced height for better fit
+  overflow: hidden;
+
+  .gallery-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    i {
+      color: #667eea;
+    }
+  }
+}
+
+// Image Pane - Thumbnails Gallery (Fixed Height - compact)
+.image-pane {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scroll-behavior: smooth;
+  max-height: 110px; // Reduced height for thumbnails
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+
+    &:hover {
+      background: #5568d3;
+    }
+  }
+
+  > div {
+    position: relative;
+    height: 85px;
+    min-width: 85px;
+    max-width: 85px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    overflow: hidden;
+
+    &:hover {
+      border-color: #667eea;
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    &.active {
+      border: 3px solid #667eea;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+      transform: translateY(-4px);
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  div i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.5rem;
+    color: #667eea;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Utility classes
+.top-n10 {
+  top: -10px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  #document-modal {
+    .modal-header {
+      padding: 1rem;
+
+      h5 {
+        font-size: 1rem;
+      }
+    }
+
+    .document-viewer {
+      min-height: 300px;
+      padding: 1rem;
+    }
+
+    .action-pane {
+      .action-buttons {
+        flex-direction: column;
+
+        .action-btn {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  .image-pane {
+    > div {
+      min-width: 80px;
+      max-width: 80px;
+      height: 80px;
+    }
+  }
+}

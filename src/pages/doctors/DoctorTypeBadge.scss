@@ -1,0 +1,61 @@
+// Doctor Type Badge Styles
+.doctor-type-badge {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  min-width: 100px;
+
+  i {
+    font-size: 0.75rem;
+  }
+
+  // Consultant - Blue/Purple (Professional, Senior)
+  &.doctor-type-consultant {
+    background-color: #5e72e4;
+    color: #ffffff;
+    border: 1px solid #5e72e4;
+
+    &:hover {
+      background-color: #4c63d2;
+    }
+  }
+
+  // Specialist - Teal/Cyan (Experienced, Skilled)
+  &.doctor-type-specialist {
+    background-color: #2dce89;
+    color: #ffffff;
+    border: 1px solid #2dce89;
+
+    &:hover {
+      background-color: #24a46d;
+    }
+  }
+
+  // Trainee - Orange/Amber (Learning, Junior)
+  &.doctor-type-trainee {
+    background-color: #fb6340;
+    color: #ffffff;
+    border: 1px solid #fb6340;
+
+    &:hover {
+      background-color: #fa3a0e;
+    }
+  }
+
+
+    &.doctor-type-hospital {
+    background-color: #960f52;
+    color: #ffffff;
+    border: 1px solid #960f52;
+
+    &:hover {
+      background-color: #b80e63;
+    }
+  }
+}

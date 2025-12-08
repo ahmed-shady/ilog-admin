@@ -105,10 +105,10 @@
   },
   "doctors": {
     "types":{
-      "trainee": "Trainee",
-      "consultant": "Consultant",
-      "specialist": "Specialist",
-      "hospital": "Hospital"
+      "trainee": "متدرب",
+      "consultant": "استشاري",
+      "specialist": "خبير",
+      "hospital": "مستشفى"
     }
   }
 }

@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { useState } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -8,11 +7,13 @@ import './Requirements.scss'
 
 import * as Yup from 'yup';
 import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
+import { useTranslation } from 'react-i18next';
 
 const RequirementForm = ({show, requirement, submit, close}: any) => {
 
-    
-    const x = () => {
+    const [t] = useTranslation();
+
+    const initForm = () => {
       return useFormik({
         initialValues: {
           name: requirement?.name || '',
@@ -32,7 +33,7 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
         }
       });
     }
-    const { handleChange, values, handleSubmit, touched, errors } = x();
+    const { handleChange, values, handleSubmit, touched, errors } = initForm();
   
     return (
       <>
@@ -63,11 +64,9 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
                       {errors.name}
                     </Form.Control.Feedback>
                   ) : (
-                    <InputGroup.Append>
-                      <InputGroup.Text>
-                        <i className="fas fa-info-circle" />
-                      </InputGroup.Text>
-                    </InputGroup.Append>
+                    <InputGroup.Text>
+                      <i className="fas fa-info-circle" />
+                    </InputGroup.Text>
                   )}
                 </InputGroup>
               </InputGroup>
@@ -81,9 +80,9 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
                 onChange={handleChange}
                 value={values.doctorType}
               >
-                  <option value={DoctorTypeEnum.TRAINEE}>Trainee</option>
-                  <option value={DoctorTypeEnum.CONSULTANT}>Consultant</option>
-                  <option value={DoctorTypeEnum.SPECIALIST}>Specialist</option>
+                  {Object.values(DoctorTypeEnum).map(
+                    type => <option value={type}>{t(`doctors.types.${type.toLowerCase()}`)}</option>
+                  )}
                 </select>
                 {touched.doctorType && errors.doctorType ? (
                   <Form.Control.Feedback type="invalid">
@@ -91,11 +90,9 @@ const RequirementForm = ({show, requirement, submit, close}: any) => {
                     {errors.doctorType}
                   </Form.Control.Feedback>
                 ) : (
-                  <InputGroup.Append>
-                    <InputGroup.Text>
-                      <i className="fas fa-user-md" />
-                    </InputGroup.Text>
-                  </InputGroup.Append>
+                  <InputGroup.Text>
+                    <i className="fas fa-user-md" />
+                  </InputGroup.Text>
                 )}
                 </InputGroup>
               </InputGroup>

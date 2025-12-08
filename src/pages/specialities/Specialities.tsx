@@ -115,7 +115,7 @@ const Specialities = () => {
                   <td className="text-center">{speciality.proceduresCount || 0}</td>
                   <td className="text-center">
                     <div className="target-types-container">
-                      {speciality?.targetTypes.map(type => <Badge className={type.toLowerCase()}>{type}</Badge>)}
+                      {speciality?.targetTypes.map(type => <span  className={`badge ${type.toLowerCase()}`}>{type}</span>)}
                     </div>
                   </td>
                   <td className='text-center'>

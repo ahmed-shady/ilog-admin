@@ -370,6 +370,11 @@ const endPoints: Record<string, EndpointConfig> = {
         method: "PUT",
         public: false
     },
+    "getSuggestions" : {
+        url: `suggestions`,
+        method: "GET",
+        public: false
+    }
 }
 
 endPoints.login;

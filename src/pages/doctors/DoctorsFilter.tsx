@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
 import AsyncSelect from 'react-select/async';
 import Select from 'react-select';
-import DOCTOR_TYPES_TEXT from './util/DoctorTypesText';
 import { listSpecialites } from '@app/api/SpecialityService';
 import { listCountries, listCountryStates } from '@app/api/CountryService';
 import Speciality from '@app/types/Speciality';
 import { Country } from '@app/types/Country';
 import { CountryState } from '@app/types/CountryState';
 import selectStyle from './util/SelectStyle';
+
+import { useTranslation } from 'react-i18next';
+
 
 const DoctorsFilter = ({ asideRef, showFilters, close, filterDto, setFilterDto }: any) => {
     const [allSpecialities, setAllSpecialities] = useState<Speciality[]>([]);
@@ -27,6 +29,7 @@ const DoctorsFilter = ({ asideRef, showFilters, close, filterDto, setFilterDto }
 
     const [isLoading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(false);
+    const [t] = useTranslation();
 
 
     useEffect(() => {
@@ -215,13 +218,10 @@ const DoctorsFilter = ({ asideRef, showFilters, close, filterDto, setFilterDto }
                         formatOptionLabel={(country) => (
                             <div className="country-option">
                                 <img
-                                    style={{
-                                        width: "30px",
-                                    }}
                                     alt={country.code}
                                     src={country.image}
                                 />
-                                <span style={{ padding: "0px" }}>{country.name}</span>
+                                <span>{country.name}</span>
                             </div>
                         )}
                         /*@ts-ignore*/
@@ -254,17 +254,21 @@ const DoctorsFilter = ({ asideRef, showFilters, close, filterDto, setFilterDto }
 
                 <div className="mb-4 mt-1 d-flex flex-column">
 
-                    {[DoctorTypeEnum.TRAINEE, DoctorTypeEnum.CONSULTANT].map((option, idx) =>
+                    {Object.values(DoctorTypeEnum).map((option: DoctorTypeEnum, idx: number
+
+                    ) =>
                         <InputGroup key={idx}>
                             <Form.Check
-                                aria-label={DOCTOR_TYPES_TEXT[option].toLowerCase()}
-                                id={DOCTOR_TYPES_TEXT[option].toLowerCase()}
-                                name={DOCTOR_TYPES_TEXT[option].toLowerCase()}
+                                aria-label={option.toLowerCase()}
+                                id={option.toLowerCase()}
+                                name={option.toLowerCase()}
                                 className="checkbox-primary"
                                 checked={types.includes(option)}
                                 onChange={(e) => typesChange(e, option)}
                             />
-                            <Form.Label className="mb-0" htmlFor={DOCTOR_TYPES_TEXT[option].toLowerCase()}>{DOCTOR_TYPES_TEXT[option]}</Form.Label>
+                            <Form.Label className="mb-0" htmlFor={option.toLowerCase()}>
+                                {t(`doctors.types.${option.toLowerCase()}`)}
+                                </Form.Label>
                         </InputGroup>
                     )}
 
