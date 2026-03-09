@@ -34,28 +34,28 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-user-md nav-icon',
     path: '/doctors',
   },
+  {
+    name: i18n.t('menusidebar.label.contactUs'),
+    icon: 'fas fa-envelope-open nav-icon',
+    path: '/contactus-messages',
+  },
   // {
   //   name: i18n.t('menusidebar.label.messages'),
-  //   icon: 'fas fa-envelope nav-icon',
-  //   path: '/contactus-messages',
-  // },
-  {
-    name: i18n.t('menusidebar.label.messages'),
-    icon: 'fas fa-user-lock nav-icon',
-    children: [
-      {
-        name: i18n.t('menusidebar.label.contactUs'),
-        icon: 'fas fa-envelope-open nav-icon',
-        path: '/contactus-messages',
-      },
+  //   icon: 'fas fa-user-lock nav-icon',
+  //   children: [
+  //     {
+  //       name: i18n.t('menusidebar.label.contactUs'),
+  //       icon: 'fas fa-envelope-open nav-icon',
+  //       path: '/contactus-messages',
+  //     },
 
-      {
-        name: i18n.t('menusidebar.label.ProceduresSuggestions'),
-        icon: 'fas fa-l nav-icon',
-        path: '/contactus-messagesd'
-      },
-    ],
-  },
+  //     {
+  //       name: i18n.t('menusidebar.label.ProceduresSuggestions'),
+  //       icon: 'fas fa-l nav-icon',
+  //       path: '/contactus-messagesd'
+  //     },
+  //   ],
+  // },
   {
     name: i18n.t('menusidebar.label.userReports'),
     icon: 'fas fa-flag nav-icon',
