@@ -1,0 +1,164 @@
+.table-responsive {
+  margin: 0;
+  border-radius: 0;
+  position: relative;
+}
+
+.reports-table {
+  font-size: 14px;
+  margin-bottom: 0;
+
+  thead {
+    background-color: #f8f9fa;
+    
+    th {
+      //border: 1px solid lightgray;
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 2px solid #dee2e6;
+      padding: 16px 12px;
+      color: #495057;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.sticky-actions {
+        position: sticky;
+        right: 0;
+        background-color: #f8f9fa;
+        z-index: 1;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.15s ease;
+      border-bottom: 1px solid #e9ecef;
+
+      &:hover {
+        background-color: #f8f9fa;
+
+        td.sticky-actions {
+          background-color: #f8f9fa;
+        }
+      }
+
+      td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e9ecef;
+
+        &.sticky-actions {
+          position: sticky;
+          right: 0;
+          background-color: white;
+          z-index: 0;
+          box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-more {
+          button::before {
+            display: none;
+          }
+        }
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.report-date {
+  font-size: 13px;
+  color: #4a5568;
+  white-space: nowrap;
+}
+
+.reason-text {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #edf2f7;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4a5568;
+  white-space: nowrap;
+}
+
+.message-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.btn-more {
+  .dropdown-toggle {
+    padding: 6px 12px;
+    border-radius: 6px;
+    
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1400px) {
+  .message-cell {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .reports-table {
+    font-size: 13px;
+
+    thead th {
+      font-size: 12px;
+      padding: 12px 8px;
+    }
+
+    tbody td {
+      padding: 12px 8px;
+    }
+  }
+
+  .message-cell {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 992px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .reports-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .reports-table {
+    font-size: 12px;
+  }
+}

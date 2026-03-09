@@ -1,0 +1,101 @@
+.user-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+
+  .user-preview-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e9ecef;
+    flex-shrink: 0;
+  }
+
+  .user-preview-info {
+    flex: 1;
+    min-width: 0;
+
+    .user-preview-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #2d3748;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-preview-email {
+      font-size: 12px;
+      color: #718096;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  // Small size for dropdowns
+  &.user-preview-sm {
+    gap: 8px;
+    min-width: 200px;
+
+    .user-preview-avatar {
+      width: 32px;
+      height: 32px;
+    }
+
+    .user-preview-info {
+      .user-preview-name {
+        font-size: 13px;
+      }
+
+      .user-preview-email {
+        font-size: 11px;
+      }
+    }
+  }
+
+  // Large size
+  &.user-preview-lg {
+    gap: 16px;
+
+    .user-preview-avatar {
+      width: 50px;
+      height: 50px;
+    }
+
+    .user-preview-info {
+      .user-preview-name {
+        font-size: 16px;
+      }
+
+      .user-preview-email {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .user-preview {
+    gap: 8px;
+    min-width: 150px;
+
+    .user-preview-avatar {
+      width: 35px;
+      height: 35px;
+    }
+
+    .user-preview-info {
+      .user-preview-name {
+        font-size: 13px;
+      }
+
+      .user-preview-email {
+        font-size: 11px;
+      }
+    }
+  }
+}
