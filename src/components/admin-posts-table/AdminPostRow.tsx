@@ -1,19 +1,26 @@
 import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { AdminPostDto } from '@app/types/AdminPostDto';
+import { LookupDto } from '@app/types/LookupDto';
 import { stripHtml, truncateText } from '@app/utils/TextUtil';
 
 interface RowProps {
   post: AdminPostDto;
   index: number;
+  typeOptions: LookupDto[];
   onDelete: (id: number) => void;
 }
 
 const AdminPostRow: React.FC<RowProps> = React.memo(
-  ({ post, index, onDelete }) => {
+  ({ post, index, typeOptions, onDelete }) => {
+    const { i18n } = useTranslation();
+    const currentLanguage = i18n.language;
 
     const plainText = stripHtml(post.content);
     const preview = truncateText(plainText, 150);
+    
+    const typeLabel = typeOptions.find(option => option.key === post.type)?.[currentLanguage === 'ar' ? 'valueAr' : 'valueEn'] || post.type;
 
     const hasCountries = post.countries?.length > 0;
     const hasSpecialities = post.specialities?.length > 0;
@@ -38,7 +45,7 @@ const AdminPostRow: React.FC<RowProps> = React.memo(
         </td>
 
         <td>
-          <Badge bg="primary">{post.type}</Badge>
+          <Badge bg="primary">{typeLabel}</Badge>
         </td>
 
         <td>

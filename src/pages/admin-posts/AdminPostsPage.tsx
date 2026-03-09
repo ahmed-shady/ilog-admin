@@ -136,6 +136,7 @@ const AdminPostsPage: React.FC = () => {
             currentPage={currentPage}
             pageSize={pageSize}
             posts={posts}
+            typeOptions={typeOptions}
             onDeleteSuccess={() => loadData(currentPage, filterValues)}
           />
         </Card.Body>

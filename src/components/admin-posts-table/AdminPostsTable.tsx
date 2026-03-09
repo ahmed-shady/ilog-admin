@@ -5,10 +5,12 @@ import { AdminPostDto } from '@app/types/AdminPostDto';
 import AdminPostRow from './AdminPostRow';
 import IButton from '../common/IButton';
 import './AdminPostsTable.scss';
+import { LookupDto } from '@app/types/LookupDto';
 
 interface Props {
   posts: AdminPostDto[];
   onDeleteSuccess: () => void;
+  typeOptions: LookupDto[];
   currentPage: number;
   pageSize: number;
 }
@@ -22,6 +24,7 @@ interface DeleteModalState {
 const AdminPostsTable: React.FC<Props> = ({
   posts,
   onDeleteSuccess,
+  typeOptions,
   currentPage,
   pageSize
 }) => {
@@ -97,6 +100,7 @@ const AdminPostsTable: React.FC<Props> = ({
                   key={post.id}
                   post={post}
                   index={currentPage * pageSize + index + 1}
+                  typeOptions={typeOptions}
                   onDelete={openDeleteModal}
                 />
               ))
