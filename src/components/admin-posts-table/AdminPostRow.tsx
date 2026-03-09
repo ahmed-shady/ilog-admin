@@ -15,8 +15,8 @@ const AdminPostRow: React.FC<RowProps> = React.memo(
     const plainText = stripHtml(post.content);
     const preview = truncateText(plainText, 150);
 
-    const hasCountries = post.countries?.length;
-    const hasSpecialities = post.specialities?.length;
+    const hasCountries = post.countries?.length > 0;
+    const hasSpecialities = post.specialities?.length > 0;
 
     return (
       <tr>
