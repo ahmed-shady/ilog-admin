@@ -86,6 +86,8 @@
       "messages": "Messages",
       "contactUs": "Contact Us Messages",
       "ProceduresSuggestions": "Procedures Suggestions",
+      "userReports": "User Reports",
+      "adminPosts": "Admin Posts",
       "mainMenu": "Main Menu",
       "subMenu": "Sub Menu"
     }

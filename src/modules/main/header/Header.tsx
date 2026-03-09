@@ -52,7 +52,7 @@ const Header = ({ containered, ...rest }: { containered?: boolean } & any) => {
   return (
     <nav className={getContainerClasses()} {...rest}>
       <div
-        style={{ width: '100%', display: 'flex', alignItems: 'center' }}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
         className={containered ? 'container' : ''}
       >
         {topNavigation && (

@@ -10,6 +10,7 @@ export const formatDateTime = (datetime: Date): string => {
     });
     return formattedDate;
 }
+
 export const formatDate = (datetime: Date): string => {
 
     const formattedDate = datetime.toLocaleString("en-GB", {
@@ -20,7 +21,6 @@ export const formatDate = (datetime: Date): string => {
     });
     return formattedDate;
 }
-
 
 export const getLocalTimeZoneOffset = (): number => {
   return new Date().getTimezoneOffset() / (-60);

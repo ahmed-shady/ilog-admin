@@ -78,6 +78,14 @@
       "dashboard": "Pano",
       "profile": "Profil",
       "blank": "Boş",
+      "specialities": "Uzmanlıklar",
+      "requirements": "Gereksinimler",
+      "doctors": "Doktorlar",
+      "messages": "Mesajlar",
+      "contactUs": "İletişim Mesajları",
+      "ProceduresSuggestions": "Prosedür Önerileri",
+      "userReports": "Kullanıcı Raporları",
+      "adminPosts": "Yönetici Gönderileri",
       "mainMenu": "Ana Menü",
       "subMenu": "Alt Menü"
     }

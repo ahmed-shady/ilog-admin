@@ -78,6 +78,14 @@
       "dashboard": "Dashboard",
       "profile": "Profile",
       "blank": "Blank",
+      "specialities": "Specialities",
+      "requirements": "Requirements",
+      "doctors": "Doctors",
+      "messages": "Messages",
+      "contactUs": "Contact Us Messages",
+      "ProceduresSuggestions": "Procedures Suggestions",
+      "userReports": "User Reports",
+      "adminPosts": "Publications d'Administration",
       "mainMenu": "Main Menu",
       "subMenu": "Sub Menu"
     }

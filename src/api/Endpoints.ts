@@ -374,7 +374,79 @@ const endPoints: Record<string, EndpointConfig> = {
         url: `suggestions`,
         method: "GET",
         public: false
-    }
+    },
+    "getUserReports": {
+        url: `user-reports/search`,
+        method: "POST",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch user reports"
+        }
+
+    },
+    "fetchLookups": {
+        url: `lookups`,
+        method: "GET",
+        public: false
+    },
+    "createAdminPost": {
+        url: `/admin-posts`,
+        method: "POST",
+        requireBody: true,
+        public: false,
+        success: {
+            toast: true,
+            defaultMessage: "Post created successfully"
+        },
+        error: {
+            toast: true,
+            defaultMessage: "Failed to create post"
+        }
+    },
+    "searchAdminPosts": {
+        url: `/admin-posts/search`,
+        method: "POST",
+        requireBody: true,
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to fetch admin posts"
+        }
+    },
+    "deleteAdminPost": {
+        url: `/admin-posts/{id}`,
+        method: "DELETE",
+        requireBody: false,
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to delete post"
+        },
+        success:{
+            toast: true,
+            defaultMessage: "Post deleted successfully"
+        }
+    },
+    "generateUploadUrl": {
+        url: `files/upload-request`,
+        method: "POST",
+        public: false,
+        error: {
+            toast: true,
+            defaultMessage: "Failed to initiate file upload"
+        }
+    },
+     "downloadFile": {
+        url: `/files/download`,
+        method: "GET",
+        public: false,
+        // responseType: "blob",
+        error: {
+            toast: true,
+            defaultMessage: "Failed to downlod file"
+        }
+    },
 }
 
 endPoints.login;

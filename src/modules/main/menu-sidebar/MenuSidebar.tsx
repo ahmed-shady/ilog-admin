@@ -19,11 +19,6 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-tachometer-alt nav-icon',
     path: '/',
   },
-  // {
-  //   name: i18n.t('menusidebar.label.blank'),
-  //   icon: 'fas fa-wrench nav-icon',
-  //   path: '/blank',
-  // },
   {
     name: i18n.t('menusidebar.label.specialities'),
     icon: 'fas fa-medkit nav-icon',
@@ -61,6 +56,16 @@ export const MENU: IMenuItem[] = [
       },
     ],
   },
+  {
+    name: i18n.t('menusidebar.label.userReports'),
+    icon: 'fas fa-flag nav-icon',
+    path: '/user-reports',
+  },
+  {
+    name: i18n.t('menusidebar.label.adminPosts'),
+    icon: 'fas fa-bullhorn nav-icon',
+    path: '/admin-posts',
+  }
 ];
 
 const StyledBrandImage = styled(Image)`
@@ -81,7 +86,7 @@ const MenuSidebar = () => {
   const sidebarSkin = useAppSelector((state) => state.ui.sidebarSkin);
   const menuItemFlat = useAppSelector((state) => state.ui.menuItemFlat);
   const menuChildIndent = useAppSelector((state) => state.ui.menuChildIndent);
-
+  
   return (
     <aside className={`main-sidebar elevation-4 ${sidebarSkin}`}>
       <Link to="/" className="brand-link">
@@ -98,7 +103,7 @@ const MenuSidebar = () => {
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">
             <StyledUserImage
-              src={currentUser?.photoURL}
+              src={currentUser?.profileImage}
               fallbackSrc="/img/default-profile.png"
               alt="User"
               width={34}

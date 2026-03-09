@@ -1,7 +1,8 @@
-import { Badge, Button, ButtonGroup, Card, Dropdown, DropdownButton, Form, InputGroup, Modal, Pagination, Table } from 'react-bootstrap';
+import { Badge, Button, ButtonGroup, Card, Dropdown, DropdownButton, Form, InputGroup, Modal, Table } from 'react-bootstrap';
 import './Doctors.scss'
 import React, { act, useEffect, useMemo, useRef, useState } from 'react';
 import { Loading } from '@app/components/loading/Loading';
+import TablePagination from '@app/components/pagination/TablePagination';
 
 import { searchDoctors, unverifyDoctor, verifyDoctor } from '@app/api/DoctorsService';
 import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
@@ -414,64 +415,14 @@ const Doctors = () => {
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="d-flex justify-content-between align-items-center mt-4 pagination-wrapper">
-              <div className="pagination-info">
-                Showing {currentPage * 15 + 1} to {Math.min((currentPage + 1) * 15, totalElements)} of {totalElements} doctors
-              </div>
-              <Pagination className='modern-pagination mb-0'>
-                <Pagination.First 
-                  onClick={() => pageNumberChange(0)} 
-                  disabled={currentPage === 0}
-                />
-                <Pagination.Prev 
-                  onClick={() => pageNumberChange(currentPage - 1)} 
-                  disabled={currentPage === 0}
-                />
-                
-                {Array.from({length: totalPages}, (_, i) => i)
-                  .filter(number => {
-                    // Show first page, last page, current page, and pages around current
-                    return number === 0 || 
-                           number === totalPages - 1 || 
-                           (number >= currentPage - 2 && number <= currentPage + 2);
-                  })
-                  .map((number, index, array) => {
-                    // Add ellipsis
-                    if (index > 0 && number - array[index - 1] > 1) {
-                      return [
-                        <Pagination.Ellipsis key={`ellipsis-${number}`} disabled />,
-                        <Pagination.Item 
-                          key={number} 
-                          active={number === currentPage} 
-                          onClick={() => pageNumberChange(number)}
-                        >
-                          {number + 1}
-                        </Pagination.Item>
-                      ];
-                    }
-                    return (
-                      <Pagination.Item 
-                        key={number} 
-                        active={number === currentPage} 
-                        onClick={() => pageNumberChange(number)}
-                      >
-                        {number + 1}
-                      </Pagination.Item>
-                    );
-                  })}
-                
-                <Pagination.Next 
-                  onClick={() => pageNumberChange(currentPage + 1)} 
-                  disabled={currentPage === totalPages - 1}
-                />
-                <Pagination.Last 
-                  onClick={() => pageNumberChange(totalPages - 1)} 
-                  disabled={currentPage === totalPages - 1}
-                />
-              </Pagination>
-            </div>
-          )}
+          <TablePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalElements={totalElements}
+            pageSize={15}
+            onPageChange={pageNumberChange}
+            itemName="doctors"
+          />
 
         </Card.Body>
       </Card>

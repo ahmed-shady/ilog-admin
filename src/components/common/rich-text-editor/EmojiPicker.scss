@@ -1,0 +1,125 @@
+.emoji-picker-wrapper {
+  position: relative;
+  display: inline-block;
+
+  .emoji-trigger {
+    font-size: 1.1rem;
+    padding: 0.25rem 0.5rem;
+    border-color: #dee2e6;
+    background: white;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #e9ecef;
+      transform: scale(1.1);
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .emoji-picker {
+    position: fixed; // Changed from absolute to fixed for better control
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1050;
+    width: 280px;
+    max-width: calc(100vw - 2rem); // Ensure it never exceeds viewport width
+
+    // Prevent picker from expanding beyond viewport
+    @media (max-width: 576px) {
+      width: 240px;
+      max-width: calc(100vw - 1rem);
+    }
+
+    .emoji-picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+      background: #f8f9fa;
+      border-radius: 8px 8px 0 0;
+
+      span {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #495057;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 0.25rem;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #dc3545;
+        }
+      }
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0.25rem;
+      padding: 0.75rem;
+      max-height: 200px;
+      overflow-y: auto;
+
+      // Responsive grid
+      @media (max-width: 576px) {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .emoji-btn {
+        background: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        font-size: 1.5rem;
+        padding: 0.25rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1;
+
+        &:hover {
+          background: #f8f9fa;
+          border-color: #667eea;
+          transform: scale(1.2);
+        }
+
+        &:active {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    // Custom scrollbar
+    .emoji-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .emoji-grid::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .emoji-grid::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 3px;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+}

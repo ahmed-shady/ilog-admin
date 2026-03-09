@@ -1,0 +1,39 @@
+.filter-content {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+
+  .form-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control {
+    border-radius: 6px;
+    border-color: #ced4da;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+
+    &:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+  }
+
+  .gap-2 {
+    gap: 0.5rem !important;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .filter-content {
+    .d-flex.justify-content-end {
+      flex-direction: column;
+      gap: 0.5rem !important;
+    }
+  }
+}

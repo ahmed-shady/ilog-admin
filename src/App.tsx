@@ -1,31 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Main from '@modules/main/Main';
-import Login from '@modules/login/Login';
-import Register from '@modules/register/Register';
-import ForgetPassword from '@modules/forgot-password/ForgotPassword';
-import RecoverPassword from '@modules/recover-password/RecoverPassword';
 import { useWindowSize } from '@app/hooks/useWindowSize';
 import { calculateWindowSize } from '@app/utils/helpers';
 import { setWindowSize } from '@app/store/reducers/ui';
 import ReactGA from 'react-ga4';
 
-import Dashboard from '@app/pages/dashboard/Dashboard';
-import Specialities from '@pages/specialities/Specialities';
-import SubMenu from '@pages/SubMenu';
-import Profile from '@pages/profile/Profile';
-
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { setCurrentUser } from './store/reducers/auth';
-
-
 import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/loading/Loading';
-import Requirements from './pages/requirements/Requirements';
-import Doctors from './pages/doctors/Doctors';
-import Messages from './pages/contactus/Messages';
+
+// Lazy load all page components
+const Main = lazy(() => import('@modules/main/Main'));
+const Login = lazy(() => import('@modules/login/Login'));
+const Register = lazy(() => import('@modules/register/Register'));
+const ForgetPassword = lazy(() => import('@modules/forgot-password/ForgotPassword'));
+const RecoverPassword = lazy(() => import('@modules/recover-password/RecoverPassword'));
+const Dashboard = lazy(() => import('@app/pages/dashboard/Dashboard'));
+const Specialities = lazy(() => import('@pages/specialities/Specialities'));
+const SubMenu = lazy(() => import('@pages/SubMenu'));
+const Profile = lazy(() => import('@pages/profile/Profile'));
+const Requirements = lazy(() => import('./pages/requirements/Requirements'));
+const Doctors = lazy(() => import('./pages/doctors/Doctors'));
+const Messages = lazy(() => import('./pages/contactus/Messages'));
+const UserReportsPage = lazy(() => import('./pages/user-reports/UserReportsPage'));
+const AdminPostsPage = lazy(() => import('./pages/admin-posts/AdminPostsPage'));
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -71,30 +72,32 @@ const App = () => {
     <>
       <Routes>
         <Route path="/login" element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Suspense fallback={<Loading />}><Login /></Suspense>} />
         </Route>
         <Route path="/register" element={<PublicRoute />}>
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Suspense fallback={<Loading />}><Register /></Suspense>} />
         </Route>
         <Route path="/forgot-password" element={<PublicRoute />}>
-          <Route path="/forgot-password" element={<ForgetPassword />} />
+          <Route path="/forgot-password" element={<Suspense fallback={<Loading />}><ForgetPassword /></Suspense>} />
         </Route>
         <Route path="/recover-password" element={<PublicRoute />}>
-          <Route path="/recover-password" element={<RecoverPassword />} />
+          <Route path="/recover-password" element={<Suspense fallback={<Loading />}><RecoverPassword /></Suspense>} />
         </Route>
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Main />}>
-            <Route path="/sub-menu-2" element={<Specialities />} />
-            <Route path="/sub-menu-1" element={<SubMenu />} />
-            <Route path="/specialities" element = {<Specialities/>} />
-            <Route path="/requirements" element = {<Requirements/>} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/doctors" element={<Doctors/>}/>
-            <Route path="/contactus-messages" element={<Messages />} />
-            <Route path="/" element={<Dashboard />} />
+              <Route path="/sub-menu-2" element={<Specialities />} />
+              <Route path="/sub-menu-1" element={<SubMenu />} />
+              <Route path="/specialities" element = {<Specialities/>} />
+              <Route path="/requirements" element = {<Requirements/>} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/doctors" element={<Doctors/>}/>
+              <Route path="/contactus-messages" element={<Messages />} />
+              <Route path="/user-reports" element={<UserReportsPage/>}/>
+              <Route path="/admin-posts" element={<AdminPostsPage/>}/>
+              <Route path="/" element={<Dashboard />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
       <ToastContainer
         autoClose={3000}
         draggable={false}

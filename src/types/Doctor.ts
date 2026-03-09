@@ -21,6 +21,7 @@ export default interface Doctor{
     emailVerified: boolean,
     registeredAt: string,
     suspended: boolean,
-    profileImage: string
+    profileImage: string,
+    profileCompleted: boolean
 
 }

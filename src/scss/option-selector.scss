@@ -1,0 +1,82 @@
+@import './variables.scss';
+
+/* Control (input box) */
+.form-floating .select-option__control {
+  height: 55px;
+  border-radius: 10px;
+  border-color: #e0e0e0;
+  box-shadow: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-floating .select-option__control:hover,
+.form-floating .select-option__control--is-focused {
+  border-color: #44B9CB;
+  box-shadow: 0 0 0 0.25rem rgba(68, 165, 203, 0.25);
+}
+
+/* Error state */
+.form-floating.invalid .select-option__control {
+  border-color: $danger;
+}
+
+/* Menu (Dropdown) */
+.select-option__menu-portal .select-option__menu {
+  z-index: 99999 !important;
+}
+
+/* Options */
+.select-option__option {
+  color: black;
+  background-color: transparent;
+}
+
+.select-option__option:active {
+  background-color: #f8f9fa !important; /* Change to your preferred active color */
+  color: black !important;
+}
+
+
+.select-option__option.select-option__option--is-selected {
+  background-color: #44B9CB !important;
+  color: white !important;
+}
+
+.select-option__option.select-option__option--is-focused {
+  background-color: #f8f9fa;
+  color: black;
+}
+
+/* Hide the indicator separator */
+.select-option__indicator-separator {
+  display: none;
+}
+
+/* Placeholder text */
+.select-option__placeholder {
+  color: #c0bfc9;
+  position: absolute;
+  top: 2px;
+}
+
+
+
+.form-floating:focus-within label,
+.form-floating:has(.select-option__option--is-focused, .select-option__single-value) label
+{
+
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 0.75rem !important;
+    height: 30px;
+}
+
+.form-floating:focus-within label,
+.form-floating:has(.select-option__option--is-focused, .select-option__single-value) label
+{
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.select-option__control > .select-option__value-container > .select-option__single-value{
+  padding-top: 15px;
+}

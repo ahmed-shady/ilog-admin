@@ -12,6 +12,7 @@ import MenuSidebar from './menu-sidebar/MenuSidebar';
 import { styled } from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { Loading } from '@app/components/loading/Loading';
+import { Suspense } from 'react';
 import './main.scss';
 
 const MENU_WIDTH = 250;
@@ -132,7 +133,9 @@ const Main = () => {
         >
           <section className="content">
             <div className={layoutBoxed ? 'container' : ''}>
-              <Outlet />
+              <Suspense fallback={<Loading />}>
+                <Outlet />
+              </Suspense>
             </div>
           </section>
         </div>

@@ -1,0 +1,159 @@
+.table-responsive {
+  margin: 0;
+  border-radius: 0;
+  position: relative;
+}
+
+.admin-posts-table {
+  font-size: 14px;
+  margin-bottom: 0;
+
+  thead {
+    background-color: #f8f9fa;
+    
+    th {
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 2px solid #dee2e6;
+      padding: 12px;
+      color: #495057;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.sticky-actions {
+        /* keep sticky for larger screens but don't force layout on small screens */
+        position: sticky;
+        right: 0;
+        background-color: #f8f9fa;
+        z-index: 1;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.15s ease;
+      border-bottom: 1px solid #e9ecef;
+
+      &:hover {
+        background-color: #f8f9fa;
+
+        td.sticky-actions {
+          background-color: #f8f9fa;
+        }
+      }
+
+      td {
+        padding: 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e9ecef;
+
+        &.sticky-actions {
+          position: sticky;
+          right: 0;
+          background-color: white;
+          z-index: 1;
+          box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-more {
+          button::before {
+            display: none;
+          }
+        }
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.post-date {
+  font-size: 13px;
+  color: #4a5568;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #edf2f7;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.content-cell {
+  /* allow content to wrap and be responsive */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  font-size: 13px;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-more {
+  .dropdown-toggle {
+    padding: 6px 12px;
+    border-radius: 6px;
+    
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .admin-posts-table {
+    font-size: 13px;
+
+    thead th {
+      font-size: 12px;
+      padding: 10px 8px;
+    }
+
+    tbody td {
+      padding: 10px 8px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* remove large min-width that forced horizontal scrolling */
+  .admin-posts-table {
+    min-width: auto;
+  }
+
+  /* For very small screens, let actions stack inside the cell instead of staying sticky */
+  .admin-posts-table td.sticky-actions,
+  .admin-posts-table th.sticky-actions {
+    position: static;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-posts-table {
+    font-size: 12px;
+  }
+}

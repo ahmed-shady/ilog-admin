@@ -1,6 +1,7 @@
 export interface Country{
     id: number,
     name: string,
+    nameAr: string,
     code: string,
     dialCode: string,
     image: string,

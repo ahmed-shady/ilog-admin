@@ -7,6 +7,7 @@ import DoctorTypeEnum from '@app/types/DoctorTypeEnum';
 import { getCountryByName } from '@app/api/CountryService';
 import { Country } from '@app/types/Country';
 import { BASE_URL } from '@app/api/axios';
+import DoctorPersonalInfo from './DoctorPersonalInfo';
 
 interface DoctorDetailsProps {
   show: boolean;
@@ -98,42 +99,7 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = ({
         {/* Details Section */}
         <div className="p-4">
           {/* Personal Information Card */}
-          <Card className="mb-3 border-0 shadow-sm">
-            <Card.Header className="bg-white border-bottom">
-              <h6 className="mb-0 text-primary">
-                <i className="fas fa-id-card me-2"></i>
-                Personal Information
-              </h6>
-            </Card.Header>
-            <Card.Body>
-              <Row className="mb-3">
-                <Col xs={4} className="text-muted">
-                  <small>Full Name</small>
-                </Col>
-                <Col xs={8}>
-                  <strong>{doctor?.name || '-'}</strong>
-                </Col>
-              </Row>
-              <Row className="mb-3">
-                <Col xs={4} className="text-muted">
-                  <small>ID/Passport</small>
-                </Col>
-                <Col xs={8}>
-                  <strong>{doctor?.identity?.id || '-'}</strong>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={4} className="text-muted">
-                  <small>Type</small>
-                </Col>
-                <Col xs={8}>
-                  <Badge bg={getDoctorTypeVariant(doctor?.type)} pill>
-                    {getDoctorTypeLabel(doctor?.type)}
-                  </Badge>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+          <DoctorPersonalInfo doctor={doctor} />
 
           {/* Professional Information Card */}
           <Card className="mb-3 border-0 shadow-sm">

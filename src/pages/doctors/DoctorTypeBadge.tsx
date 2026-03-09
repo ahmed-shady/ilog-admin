@@ -5,9 +5,10 @@ import './DoctorTypeBadge.scss';
 
 interface DoctorTypeBadgeProps {
   type: DoctorTypeEnum;
+  hideIcon?: boolean;
 }
 
-const DoctorTypeBadge: React.FC<DoctorTypeBadgeProps> = ({ type }) => {
+const DoctorTypeBadge: React.FC<DoctorTypeBadgeProps> = ({ type, hideIcon }) => {
   const getVariantAndIcon = (doctorType: DoctorTypeEnum) => {
     switch (doctorType) {
       case DoctorTypeEnum.CONSULTANT:
@@ -51,7 +52,7 @@ const DoctorTypeBadge: React.FC<DoctorTypeBadgeProps> = ({ type }) => {
       bg={variant as any} 
       className={`doctor-type-badge doctor-type-${variant}`}
     >
-      <i className={`fas ${icon} me-1`}></i>
+      {!hideIcon && <i className={`fas ${icon} me-1`}></i>}
       {label}
     </Badge>
   );

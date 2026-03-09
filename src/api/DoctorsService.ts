@@ -1,8 +1,8 @@
 import Doctor from "@app/types/Doctor";
 import { callApi } from "./axios";
 import endPoints from "./Endpoints";
-import { DoctorPagination } from "@app/types/DoctorPagination";
 import { DoctorFilterDto } from "@app/types/DoctorFilterDto";
+import { PageResponse } from "@app/types/PageResponse";
 
 
 export const listDoctors = async (): Promise<Doctor[]> => {
@@ -36,7 +36,7 @@ export const unverifyDoctor = async (id: number): Promise<void> => {
   }
 };
 
-export const searchDoctors = async (filter: DoctorFilterDto, page: number, size: number): Promise<DoctorPagination> => {
+export const searchDoctors = async (filter: DoctorFilterDto, page: number, size: number): Promise<PageResponse<Doctor>> => {
   try {
       const response = await callApi(endPoints.searchDoctors, {
         data: filter,

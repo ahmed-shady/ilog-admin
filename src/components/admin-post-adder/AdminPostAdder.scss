@@ -1,0 +1,43 @@
+.admin-post-adder {
+  .offcanvas {
+    width: 600px !important;
+    max-width: 90vw;
+  }
+
+  .offcanvas-title {
+    font-weight: 600;
+    color: #667eea;
+  }
+
+  .images-section {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+
+    h6 {
+      font-weight: 600;
+      color: #495057;
+    }
+  }
+
+  .actions-section {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.5rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+
+    &:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+  }
+}

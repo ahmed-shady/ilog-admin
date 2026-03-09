@@ -1,7 +1,7 @@
 import Doctor from "./Doctor";
 
-export interface DoctorPagination{
-    content: Doctor[],
+export interface PageResponse<T>{
+    content: T[],
     pageable: {
         pageNumber: number,
         pageSize: number,

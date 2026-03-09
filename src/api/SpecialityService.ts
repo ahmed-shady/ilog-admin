@@ -6,12 +6,13 @@ import Speciality from "@app/types/Speciality";
 
 export const listSpecialites = async (): Promise<Speciality[]> => {
   try {
-      const response = await callApi(endPoints.listSpeciality, {});
+    const response = await callApi(endPoints.listSpeciality, {});
       return response;
   } catch (error) {
     throw error;
   }
 };
+
 
 export const addSpeciality = async (speciality: Speciality): Promise<Speciality> => {
   try {
