@@ -71,7 +71,7 @@ export const downloadFileUrl = `${BASE_URL}${endPoints.downloadFile.url}`;
 
 
 
-const initiateFileUpload = async (file: File, resourceType: ResourceType): Promise<FileUploadResponse> => {
+export const initiateFileUpload = async (file: File, resourceType: ResourceType): Promise<FileUploadResponse> => {
     const fileName = file.name;
     const fileSize = file.size;
     const fileType = file.type;
@@ -82,9 +82,7 @@ const initiateFileUpload = async (file: File, resourceType: ResourceType): Promi
     return response;
 }
 
-
-export const uploadFile = async (file: File, resourceType: ResourceType): Promise<StoredFile> => {
-    const uploadResponse = await initiateFileUpload(file, resourceType);
+export const uploadFile = async (file: File, uploadResponse: FileUploadResponse): Promise<StoredFile> => {
     try {
         const headers = {
           "Content-Type": file.type, // e.g., "image/png"

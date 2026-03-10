@@ -223,21 +223,23 @@ const AdminPostAdder: React.FC<AdminPostAdderProps> = ({ show, onHide, onSubmit,
                   />
                 </Form.Group>
 
-                {/* Image Uploads */}
+                {/* File Uploads */}
                 <div className="images-section">
                   <h6 className="mb-3">
-                    <i className="fas fa-images me-2"></i>
-                    Images (Maximum 3)
+                    <i className="fas fa-file-upload me-2"></i>
+                    Attachments (Maximum 3)
                   </h6>
 
                   <Row>
                     {values.images.map((img, idx) => (
                       <Col xs={12} md={4} key={idx}>
                         <FileUploader
-                          label={`Image ${idx + 1}`}
+                          label={`File ${idx + 1}`}
                           value={img.file}
                           onChange={(event) => handleFileStatusChange(event, idx)}
-                          placeholder={`Upload image ${idx + 1}`}
+                          accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                          maxSizeMB={10}
+                          placeholder={`Upload file ${idx + 1}`}
                         />
                       </Col>
                     ))}

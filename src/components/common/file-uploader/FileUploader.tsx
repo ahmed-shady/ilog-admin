@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import './FileUploader.scss';
 import { StoredFile } from '@app/types/StoredFile';
-import { uploadFile } from '@app/api/FileService';
+import { initiateFileUpload, uploadFile } from '@app/api/FileService';
 import ResourceType from '@app/types/ResourceType';
 
 export enum FileUploadStatus {
@@ -40,8 +40,10 @@ const FileUploader: React.FC<FileUploaderProps> = ({
   const [error, setError] = useState<string>('');
   const [status, setStatus] = useState<FileUploadStatus>(FileUploadStatus.EMPTY);
   const [uploadedFile, setUploadedFile] = useState<StoredFile | null>(null);
+  const [isImage, setIsImage] = useState<boolean>(true);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('File input changed');
     const file = e.target.files?.[0];
     setError('');
 
@@ -53,14 +55,22 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         return;
       }
 
-      // Create preview for images
-      if (file.type.startsWith('image/')) {
+      // Determine if file is an image
+      const fileIsImage = file.type.startsWith('image/');
+      setIsImage(fileIsImage);
+
+      // Create temporary preview for images only
+      console.log('Selected file:', fileIsImage);
+      if (fileIsImage) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result as string);
         };
         reader.readAsDataURL(file);
+      } else {
+        setPreview(null);
       }
+      console.log('Selected file:', file);
 
       handleFileSelect(file);
     }
@@ -72,8 +82,29 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 
       setStatus(FileUploadStatus.UPLOADING);
       onChange({ status: FileUploadStatus.UPLOADING });
-      const storedFile = await uploadFile(file, ResourceType.ADMIN_POST);
+      const uploadInitiateResponse = await initiateFileUpload(file, ResourceType.ADMIN_POST);
+      const storedFile = uploadInitiateResponse.file;
       setUploadedFile(storedFile);
+      const uploadedFileIsImage = storedFile.fileType.startsWith('image/');
+      setIsImage(uploadedFileIsImage);
+      if(!uploadedFileIsImage){
+      setPreview(storedFile?.thumbnail?.filePath || null);
+      }
+      await uploadFile(file, uploadInitiateResponse);
+
+      // Set preview from uploaded file
+
+      
+      if (uploadedFileIsImage) {
+        // Use the file path for images
+        setPreview(storedFile.filePath);
+      } else if (storedFile.thumbnail?.filePath) {
+        // Use thumbnail for non-images (PDF, PowerPoint, etc.)
+        setPreview(storedFile.thumbnail.filePath);
+      } else {
+        setPreview(null);
+      }
+      
       setStatus(FileUploadStatus.UPLOADED);
       onChange({ status: FileUploadStatus.UPLOADED, file: storedFile });
     } catch (error) {
@@ -89,6 +120,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     setError('');
     setStatus(FileUploadStatus.EMPTY);
     setUploadedFile(null);
+    setIsImage(true);
     onChange({ status: FileUploadStatus.EMPTY });
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
