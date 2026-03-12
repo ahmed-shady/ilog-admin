@@ -25,7 +25,7 @@ const AdminPostsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [totalElements, setTotalElements] = useState<number>(0);
-  const [pageSize] = useState<number>(2);
+  const [pageSize] = useState<number>(15);
   const [filterValues, setFilterValues] = useState<AdminPostsFilterDto>({});
   const [showAdder, setShowAdder] = useState<boolean>(false);
   const [typeOptions, setTypeOptions] = useState<LookupDto[]>([]);
