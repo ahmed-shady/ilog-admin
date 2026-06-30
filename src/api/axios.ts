@@ -4,6 +4,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BASE_URL = "https://api.ilog-app.com";
+
+// uncomment the following line to use the local backend server
+// export const BASE_URL = "https://ilog-app.com/api";
 // export const BASE_URL = "http://localhost:8080/api";
 
 export const DIRECT_BASE_URL = "https://direct.ilog-app.com";
