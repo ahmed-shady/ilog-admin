@@ -4,23 +4,23 @@ import endPoints from "./Endpoints";
 import { Country } from "@app/types/Country";
 import ApplicationStats from "@app/types/ApplicationStats";
 
-
 export const doctorsStatisticsPerCountry = async (): Promise<Country[]> => {
   try {
-      const response = await callApi(endPoints.doctorsStatisticsPerCountry, {});
-      return response;
+    const response = await callApi(endPoints.doctorsStatisticsPerCountry, {});
+    return response;
   } catch (error) {
     throw error;
   }
 };
 
-
-export const doctorsStatisticsPerCountryState = async (countryName: string): Promise<CountryState[]> => {
+export const doctorsStatisticsPerCountryState = async (
+  countryName: string,
+): Promise<CountryState[]> => {
   try {
-      const response = await callApi(endPoints.doctorsStatisticsPerCountryState, {
-        params: {country: countryName}
-      });
-      return response;
+    const response = await callApi(endPoints.doctorsStatisticsPerCountryState, {
+      params: { country: countryName },
+    });
+    return response;
   } catch (error) {
     throw error;
   }
@@ -28,8 +28,31 @@ export const doctorsStatisticsPerCountryState = async (countryName: string): Pro
 
 export const getApplicationStats = async (): Promise<ApplicationStats> => {
   try {
-      const response = await callApi(endPoints.getApplicationStats, {});
-      return response;
+    const response = await callApi(endPoints.getApplicationStats, {});
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export interface AgeGroupStat {
+  ageGroup: string;
+  count: number;
+}
+
+export interface CountryAgeDistribution {
+  country: string;
+  ageGroups: AgeGroupStat[];
+}
+
+export const getDoctorsAgeDistribution = async (
+  countries: string[],
+): Promise<CountryAgeDistribution[]> => {
+  try {
+    const response = await callApi(endPoints.doctorsAgeDistribution, {
+      params: { countries: countries.join(",") },
+    });
+    return response;
   } catch (error) {
     throw error;
   }
