@@ -1,15 +1,4 @@
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  Card,
-  Dropdown,
-  DropdownButton,
-  Form,
-  InputGroup,
-  Modal,
-  Table,
-} from "react-bootstrap";
+import { Button, ButtonGroup, Form } from "react-bootstrap";
 import "./Doctors.scss";
 import { useEffect, useState } from "react";
 
@@ -21,7 +10,7 @@ import { listCountries, listCountryStates } from "@app/api/CountryService";
 import Speciality from "@app/types/Speciality";
 import { Country } from "@app/types/Country";
 import { CountryState } from "@app/types/CountryState";
-import selectStyle from "./util/SelectStyle";
+import selectStyle from "./util/SelectStyleDark";
 
 import { useTranslation } from "react-i18next";
 
@@ -196,29 +185,32 @@ const DoctorsFilter = ({
     <aside
       ref={asideRef}
       className={(showFilters ? "open" : "closed") + " filter-sidebar"}
-      style={{
-        top: 0,
-        bottom: false ? "57px" : "0px",
-        padding: `60px 16px 16px 16px`,
-        overflowY: "scroll",
-        height: "100%",
-      }}
     >
-      <h5 className="text-center">
-        Filter Doctors
-        <button type="button" className="close filters-close" onClick={close}>
-          <span aria-hidden="true">×</span>
-          <span className="sr-only">Close</span>
+      {/* Header */}
+      <div className="filter-sidebar-header">
+        <h6 className="filter-title">
+          <i className="fas fa-sliders-h" />
+          Filter Doctors
+        </h6>
+        <button
+          type="button"
+          className="filters-close-btn"
+          onClick={close}
+          aria-label="Close filters"
+        >
+          <i className="fas fa-times" />
         </button>
-      </h5>
-      <hr className="mb-2" />
+      </div>
 
-      <div style={{ padding: "8px 0" }}>
-        <h6>Speciality</h6>
-
-        <div className="mb-4">
+      {/* Body */}
+      <div className="filter-sidebar-body">
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-stethoscope" />
+            Speciality
+          </div>
           <AsyncSelect
-            placeholder="Specialiy"
+            placeholder="Select speciality..."
             cacheOptions
             isMulti
             defaultOptions
@@ -236,18 +228,19 @@ const DoctorsFilter = ({
           />
         </div>
 
-        <h6>Country</h6>
-
-        <div className="mb-4">
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-globe" />
+            Country
+          </div>
           <AsyncSelect
-            placeholder="Country"
+            placeholder="Select country..."
             cacheOptions
             isMulti
             defaultOptions
             loadOptions={countriesLoader}
             value={countries}
             styles={selectStyle}
-            //menuPortalTarget={document.body}
             formatOptionLabel={(country) => (
               <div className="country-option">
                 <img alt={country.code} src={country.image} />
@@ -260,15 +253,17 @@ const DoctorsFilter = ({
           />
         </div>
 
-        <h6>State</h6>
-        <div className="mb-4">
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-map-marker-alt" />
+            State / Region
+          </div>
           <Select
-            placeholder="State"
+            placeholder="Select state..."
             isMulti
             options={allStates}
             styles={selectStyle}
             value={states}
-            //menuPortalTarget={document.body}
             formatOptionLabel={(state) => (
               <div className="state-option">
                 <span style={{ padding: "1px" }}>{state.name}</span>
@@ -282,30 +277,40 @@ const DoctorsFilter = ({
           />
         </div>
 
-        <h6>Doctor Type</h6>
-
-        <div className="mb-4 mt-1 d-flex flex-column">
-          {Object.values(DoctorTypeEnum).map(
-            (option: DoctorTypeEnum, idx: number) => (
-              <InputGroup key={idx}>
-                <Form.Check
-                  aria-label={option.toLowerCase()}
-                  id={option.toLowerCase()}
-                  name={option.toLowerCase()}
-                  className="checkbox-primary"
-                  checked={types.includes(option)}
-                  onChange={(e) => typesChange(e, option)}
-                />
-                <Form.Label className="mb-0" htmlFor={option.toLowerCase()}>
-                  {t(`doctors.types.${option.toLowerCase()}`)}
-                </Form.Label>
-              </InputGroup>
-            ),
-          )}
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-user-tag" />
+            Doctor Type
+          </div>
+          <div className="d-flex flex-column gap-2 ps-1">
+            {Object.values(DoctorTypeEnum).map(
+              (option: DoctorTypeEnum, idx: number) => (
+                <div key={idx} className="form-check mb-0">
+                  <Form.Check
+                    aria-label={option.toLowerCase()}
+                    id={option.toLowerCase()}
+                    name={option.toLowerCase()}
+                    className="checkbox-primary"
+                    checked={types.includes(option)}
+                    onChange={(e) => typesChange(e, option)}
+                  />
+                  <Form.Label
+                    className="form-check-label mb-0"
+                    htmlFor={option.toLowerCase()}
+                  >
+                    {t(`doctors.types.${option.toLowerCase()}`)}
+                  </Form.Label>
+                </div>
+              ),
+            )}
+          </div>
         </div>
-        <span>Verified?</span>
 
-        <div className="mb-4 mt-1 d-flex flex-column">
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-shield-alt" />
+            Verification Status
+          </div>
           <select
             id="verified"
             name="verified"
@@ -313,14 +318,18 @@ const DoctorsFilter = ({
             value={String(verified)}
             onChange={handleVerifiedChange}
           >
-            <option value="null">All</option>
-            <option value="true">Verified</option>
-            <option value="false">Not Verified</option>
+            <option value="null">All doctors</option>
+            <option value="true">Verified only</option>
+            <option value="false">Not verified only</option>
           </select>
         </div>
 
-        <div className="mb-4 mt-1 d-flex flex-column">
-          <InputGroup>
+        <div className="filter-section">
+          <div className="filter-section-label">
+            <i className="fas fa-file-alt" />
+            Documents
+          </div>
+          <div className="form-check ps-1">
             <Form.Check
               aria-label="has pending document(s)"
               id="pending-documents"
@@ -329,17 +338,25 @@ const DoctorsFilter = ({
               checked={hasPendingDocuments || false}
               onChange={(e) => setHasPendingDocuments(e.target.checked || null)}
             />
-            <Form.Label className="mb-0" htmlFor="pending-documents">
+            <Form.Label
+              className="form-check-label mb-0"
+              htmlFor="pending-documents"
+            >
               With Pending Document(s)
             </Form.Label>
-          </InputGroup>
+          </div>
         </div>
+      </div>
 
-        <ButtonGroup size="sm" className="filter-actions">
-          <Button variant="primary" className="rounded" onClick={apply}>
+      {/* Footer */}
+      <div className="filter-sidebar-footer">
+        <ButtonGroup className="filter-actions">
+          <Button variant="primary" onClick={apply}>
+            <i className="fas fa-check me-2" />
             Apply
           </Button>
-          <Button variant="danger" className="rounded" onClick={reset}>
+          <Button variant="outline-danger" onClick={reset}>
+            <i className="fas fa-undo me-2" />
             Reset
           </Button>
         </ButtonGroup>

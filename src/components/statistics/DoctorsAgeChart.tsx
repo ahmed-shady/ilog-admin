@@ -127,7 +127,10 @@ const DoctorsAgeChart = () => {
         {!loading && selectedCountries.length === 0 && (
           <div className="age-chart-placeholder">
             <i className="fas fa-chart-bar"></i>
-            <p>Select one or more countries to view doctor age distribution</p>
+            <p>
+              No data available. Select a country above to view age
+              distribution.
+            </p>
           </div>
         )}
 
