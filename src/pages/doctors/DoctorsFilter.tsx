@@ -329,12 +329,13 @@ const DoctorsFilter = ({
             <i className="fas fa-file-alt" />
             Documents
           </div>
-          <div className="form-check ps-1">
+          <div className="form-check ps-1 d-flex g-1">
             <Form.Check
               aria-label="has pending document(s)"
               id="pending-documents"
               name="pending-documents"
               className="checkbox-primary"
+              style={{ marginLeft: "13px" }}
               checked={hasPendingDocuments || false}
               onChange={(e) => setHasPendingDocuments(e.target.checked || null)}
             />
