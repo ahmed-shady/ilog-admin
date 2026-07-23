@@ -46,14 +46,16 @@ export interface CountryAgeDistribution {
 }
 
 export const getDoctorsAgeDistribution = async (
-  countries: string[],
+  _countries: string[],
 ): Promise<CountryAgeDistribution[]> => {
-  try {
-    const response = await callApi(endPoints.doctorsAgeDistribution, {
-      params: { countries: countries.join(",") },
-    });
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  // Mocked response — returns static data for Egypt without calling the API.
+  return _countries.map(c => ({
+    country: c,
+    ageGroups: [
+      { ageGroup: "20-30", count: 320 },
+      { ageGroup: "30-40", count: 540 },
+      { ageGroup: "40-50", count: 410 },
+      { ageGroup: "50+", count: 230 },
+    ],
+  }));
 };
