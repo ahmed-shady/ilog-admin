@@ -1,0 +1,211 @@
+$teal: #2a8ca6;
+$muted: #64748b;
+
+.spec-filter {
+  border: 1px solid #eef2f6;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbfc 100%);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem 1.25rem;
+  margin-bottom: 1.5rem;
+  transition: padding 0.2s ease;
+
+  // Collapsed: shrink to just the header row
+  &.is-collapsed {
+    padding: 0.65rem 1rem;
+    margin-bottom: 1rem;
+
+    .spec-filter__head {
+      margin-bottom: 0;
+    }
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  // Clickable title/chevron that toggles the panel
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    background: transparent;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    cursor: pointer;
+
+    > i:first-child {
+      color: $teal;
+    }
+
+    &:hover {
+      color: $teal;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #44b9cb 0%, $teal 100%);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__chevron {
+    font-size: 0.75rem;
+    color: $muted;
+    transition: transform 0.22s ease;
+  }
+
+  &.is-collapsed &__chevron {
+    transform: rotate(-90deg);
+  }
+
+  &__reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: $muted;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+
+    &:hover {
+      color: #ef4444;
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.25rem;
+    animation: spec-filter-expand 0.22s ease-out;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: $muted;
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  &__country {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 20px;
+      height: 14px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+  }
+
+  // Doctor-type toggle pills
+  &__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+
+    button {
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      color: $muted;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+
+      &:hover {
+        border-color: #7fd0dc;
+        color: $teal;
+      }
+
+      &.is-active {
+        background: linear-gradient(135deg, #44b9cb 0%, $teal 100%);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(42, 140, 166, 0.3);
+      }
+    }
+  }
+
+  // Verified segmented control
+  &__segmented {
+    display: inline-flex;
+    padding: 3px;
+    background: #f1f5f9;
+    border-radius: 11px;
+    gap: 2px;
+    align-self: flex-start;
+
+    button {
+      border: none;
+      background: transparent;
+      color: $muted;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.4rem 0.95rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+
+      &:hover {
+        color: $teal;
+      }
+
+      &.is-active {
+        background: #ffffff;
+        color: $teal;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+      }
+    }
+  }
+}
+
+@keyframes spec-filter-expand {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .spec-filter__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,60 @@
+$teal: #2a8ca6;
+$teal-bright: #44b9cb;
+$ink: #1e293b;
+$muted: #64748b;
+
+// Shared header for dashboard cards (map, speciality chart, …)
+.dash-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbfc 100%);
+  border-bottom: 1px solid #eef2f6;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+
+    h5 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: $ink;
+      letter-spacing: -0.01em;
+    }
+
+    small {
+      color: $muted;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, $teal-bright 0%, $teal 100%);
+    color: #fff;
+    font-size: 1.15rem;
+    box-shadow: 0 6px 16px rgba(42, 140, 166, 0.35);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .dash-card-header {
+    padding: 1.25rem 1.1rem;
+  }
+}

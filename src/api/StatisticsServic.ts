@@ -3,6 +3,23 @@ import { callApi } from "./axios";
 import endPoints from "./Endpoints";
 import { Country } from "@app/types/Country";
 import ApplicationStats from "@app/types/ApplicationStats";
+import { SpecialityDistribution } from "@app/types/SpecialityDistribution";
+import { SpecialityDistributionFilter } from "@app/types/SpecialityDistributionFilter";
+
+/**
+ * Number of doctors per speciality, filtered by specialities / countries /
+ * doctor types / verified status. Single request to the backend.
+ */
+export const getSpecialityDistribution = async (
+  filter: SpecialityDistributionFilter
+): Promise<SpecialityDistribution[]> => {
+  try {
+    const response = await callApi(endPoints.doctorsPerSpeciality, { data: filter });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const doctorsStatisticsPerCountry = async (): Promise<Country[]> => {
   try {

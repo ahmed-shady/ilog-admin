@@ -169,11 +169,20 @@ const endPoints: Record<string, EndpointConfig> = {
     public: false,
     success: {
       toast: true,
-      defaultMessage: "requirement updated sucessfully",
+      defaultMessage: "requirement updated sucessfully"
     },
     error: {
       toast: true,
       defaultMessage: "error while updating requirement",
+    },
+  },
+  doctorsPerSpeciality: {
+    url: `/statistics/per-speciality`,
+    method: "POST",
+    public: false,
+    error: {
+      toast: true,
+      defaultMessage: "Failed to fetch doctors distribution per speciality",
     },
   },
   deleteRequirement: {

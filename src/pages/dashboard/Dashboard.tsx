@@ -5,6 +5,9 @@ import AppStats from "./AppStats";
 import { Card, Row, Col, Button, ButtonGroup } from "react-bootstrap";
 import "./Dashboard.scss";
 import { useState } from "react";
+import DoctorsPerSpecialityChart from '@app/components/statistics/DoctorsPerSpecialityChart';
+import DashboardCardHeader from '@app/components/statistics/DashboardCardHeader';
+import './Dashboard.scss';
 
 const Dashboard = () => {
   const [mapStyle, setMapStyle] = useState<"light" | "dark">("light");
@@ -47,43 +50,36 @@ const Dashboard = () => {
             <AppStats />
           </div>
 
+
+
           {/* Global Map Section */}
           <Card className="shadow-sm border-0 mx-0 dashboard-map-card">
-            <Card.Header className="bg-white border-0 py-3">
-              <div className="d-flex align-items-center justify-content-between">
-                <div>
-                  <h5 className="mb-1 fw-bold">
-                    <i className="fas fa-globe-americas me-2 text-info"></i>
-                    Global Distribution
-                  </h5>
-                  <small className="text-muted">
-                    Interactive map showing doctor distribution by country and
-                    state
-                  </small>
-                </div>
-                <div className="map-style-switcher-inline">
-                  <ButtonGroup size="sm">
-                    <Button
-                      variant={
-                        mapStyle === "light" ? "primary" : "outline-secondary"
-                      }
-                      onClick={() => setMapStyle("light")}
-                    >
-                      <i className="fas fa-sun me-1"></i>
-                      Light
-                    </Button>
-                    <Button
-                      variant={
-                        mapStyle === "dark" ? "primary" : "outline-secondary"
-                      }
-                      onClick={() => setMapStyle("dark")}
-                    >
-                      <i className="fas fa-moon me-1"></i>
-                      Dark
-                    </Button>
-                  </ButtonGroup>
-                </div>
-              </div>
+            <Card.Header className="p-0 border-0 bg-transparent">
+              <DashboardCardHeader
+                icon="fas fa-globe-americas"
+                title="Global Distribution"
+                subtitle="Interactive map showing doctor distribution by country and state"
+                actions={
+                  <div className="map-style-switcher-inline">
+                    <ButtonGroup size="sm">
+                      <Button
+                        variant={mapStyle === 'light' ? 'primary' : 'outline-secondary'}
+                        onClick={() => setMapStyle('light')}
+                      >
+                        <i className="fas fa-sun me-1"></i>
+                        Light
+                      </Button>
+                      <Button
+                        variant={mapStyle === 'dark' ? 'primary' : 'outline-secondary'}
+                        onClick={() => setMapStyle('dark')}
+                      >
+                        <i className="fas fa-moon me-1"></i>
+                        Dark
+                      </Button>
+                    </ButtonGroup>
+                  </div>
+                }
+              />
             </Card.Header>
             <Card.Body className="p-0">
               <DoctorsMap mapStyle={mapStyle} />
@@ -91,7 +87,7 @@ const Dashboard = () => {
           </Card>
 
           {/* Doctors Age Distribution Chart */}
-          <Card className="shadow-sm border-0 mx-0 mt-4 dashboard-age-chart-card">
+          {/* <Card className="shadow-sm border-0 mx-0 mt-4 dashboard-age-chart-card">
             <Card.Header className="bg-white border-0 py-3">
               <div>
                 <h5 className="mb-1 fw-bold">
@@ -106,7 +102,12 @@ const Dashboard = () => {
             <Card.Body className="px-4 pb-4">
               <DoctorsAgeChart />
             </Card.Body>
-          </Card>
+          </Card> */}
+          {/* Doctors by Speciality Section */}
+          <div className="mb-4">
+            <DoctorsPerSpecialityChart />
+          </div>
+          
         </div>
       </section>
     </div>
