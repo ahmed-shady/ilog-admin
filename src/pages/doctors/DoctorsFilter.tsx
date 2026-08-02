@@ -329,7 +329,7 @@ const DoctorsFilter = ({
             <i className="fas fa-file-alt" />
             Documents
           </div>
-          <div className="form-check ps-1 d-flex g-1">
+          <div className="form-check ps-1 d-flex">
             <Form.Check
               aria-label="has pending document(s)"
               id="pending-documents"

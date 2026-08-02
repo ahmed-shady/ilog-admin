@@ -49,7 +49,7 @@ export const getDoctorsAgeDistribution = async (
   _countries: string[],
 ): Promise<CountryAgeDistribution[]> => {
   // Mocked response — returns static data for Egypt without calling the API.
-  return _countries.map(c => ({
+  return _countries.map((c) => ({
     country: c,
     ageGroups: [
       { ageGroup: "20-30", count: 320 },
@@ -57,5 +57,23 @@ export const getDoctorsAgeDistribution = async (
       { ageGroup: "40-50", count: 410 },
       { ageGroup: "50+", count: 230 },
     ],
+  }));
+};
+
+export interface SpecialityDistribution {
+  speciality: string;
+  count: number;
+}
+
+export const getDoctorsSpecialityDistribution = async (
+  specialities: string[],
+  _countries: string[],
+  _degrees: string[],
+): Promise<SpecialityDistribution[]> => {
+  // Mocked response
+  const mockCounts = [312, 487, 253, 178, 421, 356, 289, 134, 502, 267];
+  return specialities.map((s, i) => ({
+    speciality: s,
+    count: mockCounts[i % mockCounts.length],
   }));
 };
