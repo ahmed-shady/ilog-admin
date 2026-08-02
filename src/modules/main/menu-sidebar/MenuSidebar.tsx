@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { MenuItem } from '@components';
-import { Image } from '@profabric/react-components';
-import styled from 'styled-components';
-import { SidebarSearch } from '@app/components/sidebar-search/SidebarSearch';
-import i18n from '@app/utils/i18n';
-import { useAppSelector } from '@app/store/store';
+import { Link } from "react-router-dom";
+import { MenuItem } from "@components";
+import { Image } from "@profabric/react-components";
+import styled from "styled-components";
+import { SidebarSearch } from "@app/components/sidebar-search/SidebarSearch";
+import i18n from "@app/utils/i18n";
+import { useAppSelector } from "@app/store/store";
 
 export interface IMenuItem {
   name: string;
@@ -15,30 +15,31 @@ export interface IMenuItem {
 
 export const MENU: IMenuItem[] = [
   {
-    name: i18n.t('menusidebar.label.dashboard'),
-    icon: 'fas fa-tachometer-alt nav-icon',
-    path: '/',
+    name: i18n.t("menusidebar.label.dashboard"),
+    icon: "fas fa-tachometer-alt nav-icon",
+    path: "/",
   },
   {
-    name: i18n.t('menusidebar.label.specialities'),
-    icon: 'fas fa-medkit nav-icon',
-    path: '/specialities',
+    name: i18n.t("menusidebar.label.specialities"),
+    icon: "fas fa-medkit nav-icon",
+    path: "/specialities",
   },
   {
-    name: i18n.t('menusidebar.label.requirements'),
-    icon: 'fas fa-file nav-icon',
-    path: '/requirements',
+    name: i18n.t("menusidebar.label.requirements"),
+    icon: "fas fa-file nav-icon",
+    path: "/requirements",
   },
   {
-    name: i18n.t('menusidebar.label.doctors'),
-    icon: 'fas fa-user-md nav-icon',
-    path: '/doctors',
+    name: i18n.t("menusidebar.label.doctors"),
+    icon: "fas fa-user-md nav-icon",
+    path: "/doctors",
   },
   {
-    name: i18n.t('menusidebar.label.contactUs'),
-    icon: 'fas fa-envelope-open nav-icon',
-    path: '/contactus-messages',
+    name: i18n.t("menusidebar.label.contactUs"),
+    icon: "fas fa-envelope-open nav-icon",
+    path: "/contactus-messages",
   },
+
   // {
   //   name: i18n.t('menusidebar.label.messages'),
   //   icon: 'fas fa-user-lock nav-icon',
@@ -57,15 +58,20 @@ export const MENU: IMenuItem[] = [
   //   ],
   // },
   {
-    name: i18n.t('menusidebar.label.userReports'),
-    icon: 'fas fa-flag nav-icon',
-    path: '/user-reports',
+    name: i18n.t("menusidebar.label.userReports"),
+    icon: "fas fa-flag nav-icon",
+    path: "/user-reports",
   },
   {
-    name: i18n.t('menusidebar.label.adminPosts'),
-    icon: 'fas fa-bullhorn nav-icon',
-    path: '/admin-posts',
-  }
+    name: i18n.t("menusidebar.label.adminPosts"),
+    icon: "fas fa-bullhorn nav-icon",
+    path: "/admin-posts",
+  },
+  {
+    name: i18n.t("menusidebar.label.adminUsers"),
+    icon: "fas fa-users-cog nav-icon",
+    path: "/admin-users",
+  },
 ];
 
 const StyledBrandImage = styled(Image)`
@@ -86,7 +92,7 @@ const MenuSidebar = () => {
   const sidebarSkin = useAppSelector((state) => state.ui.sidebarSkin);
   const menuItemFlat = useAppSelector((state) => state.ui.menuItemFlat);
   const menuChildIndent = useAppSelector((state) => state.ui.menuChildIndent);
-  
+
   return (
     <aside className={`main-sidebar elevation-4 ${sidebarSkin}`}>
       <Link to="/" className="brand-link">
@@ -112,7 +118,7 @@ const MenuSidebar = () => {
             />
           </div>
           <div className="info">
-            <Link to={'/profile'} className="d-block">
+            <Link to={"/profile"} className="d-block">
               {currentUser?.name || currentUser?.email}
             </Link>
           </div>
@@ -122,11 +128,11 @@ const MenuSidebar = () => {
           <SidebarSearch />
         </div>
 
-        <nav className="mt-2" style={{ overflowY: 'hidden' }}>
+        <nav className="mt-2" style={{ overflowY: "hidden" }}>
           <ul
             className={`nav nav-pills nav-sidebar flex-column${
-              menuItemFlat ? ' nav-flat' : ''
-            }${menuChildIndent ? ' nav-child-indent' : ''}`}
+              menuItemFlat ? " nav-flat" : ""
+            }${menuChildIndent ? " nav-child-indent" : ""}`}
             role="menu"
           >
             {MENU.map((menuItem: IMenuItem) => (

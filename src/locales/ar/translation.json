@@ -88,6 +88,7 @@
       "ProceduresSuggestions": "Procedures Suggestions",
       "userReports": "User Reports",
       "adminPosts": "منشورات الإدارة",
+      "adminUsers": "المستخدمون الإداريون",
       "mainMenu": "Main Menu",
       "subMenu": "Sub Menu"
     }
@@ -106,7 +107,7 @@
     "quantityUnit": "{{quantity}} {{unit}}"
   },
   "doctors": {
-    "types":{
+    "types": {
       "trainee": "متدرب",
       "consultant": "استشاري",
       "specialist": "خبير",

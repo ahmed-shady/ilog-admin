@@ -88,6 +88,7 @@
       "ProceduresSuggestions": "Procedures Suggestions",
       "userReports": "User Reports",
       "adminPosts": "Admin Posts",
+      "adminUsers": "Admin Users",
       "mainMenu": "Main Menu",
       "subMenu": "Sub Menu"
     }
@@ -106,7 +107,7 @@
     "quantityUnit": "{{quantity}} {{unit}}"
   },
   "doctors": {
-    "types":{
+    "types": {
       "trainee": "Trainee",
       "consultant": "Consultant",
       "specialist": "Specialist",
