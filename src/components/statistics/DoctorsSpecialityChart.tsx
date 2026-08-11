@@ -8,13 +8,11 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import {
-  getDoctorsSpecialityDistribution,
-  SpecialityDistribution,
-} from "@app/api/StatisticsServic";
+import { SpecialityDistribution } from "@app/api/StatisticsServic";
 import Speciality from "@app/types/Speciality";
 import { Country } from "@app/types/Country";
 import DoctorTypeEnum from "@app/types/DoctorTypeEnum";
+import { getDoctorsSpecialityDistribution } from "../../api/StatisticsServic";
 
 const BAR_COLORS = [
   "#3abeff",
@@ -44,13 +42,11 @@ const DoctorsSpecialityChart = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!selectedSpecialities.length) {
-      setChartData([]);
-      return;
-    }
     setLoading(true);
     getDoctorsSpecialityDistribution(
-      selectedSpecialities.map((s) => s.name),
+      selectedSpecialities
+        .map((s) => s.id)
+        .filter((id): id is number => id !== undefined),
       selectedCountries.map((c) => c.name),
       selectedDegrees,
     )
@@ -58,17 +54,6 @@ const DoctorsSpecialityChart = ({
       .catch(() => setChartData([]))
       .finally(() => setLoading(false));
   }, [selectedSpecialities, selectedCountries, selectedDegrees]);
-
-  if (!selectedSpecialities.length) {
-    return (
-      <div className="text-center text-muted py-5">
-        <i className="fas fa-chart-bar fa-3x mb-3 d-block opacity-25"></i>
-        <p className="mb-0">
-          Select at least one speciality to view the distribution chart.
-        </p>
-      </div>
-    );
-  }
 
   if (loading) {
     return (
@@ -100,7 +85,7 @@ const DoctorsSpecialityChart = ({
             interval={0}
           />
           <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-          <Tooltip formatter={(value: number) => [value, "Doctors"]} />
+          <Tooltip formatter={(value) => [value, "Doctors"]} />
           <Bar dataKey="count" radius={[4, 4, 0, 0]}>
             {chartData.map((_, index) => (
               <Cell

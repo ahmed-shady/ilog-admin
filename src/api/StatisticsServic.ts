@@ -3,6 +3,7 @@ import { callApi } from "./axios";
 import endPoints from "./Endpoints";
 import { Country } from "@app/types/Country";
 import ApplicationStats from "@app/types/ApplicationStats";
+import DoctorTypeEnum from "@app/types/DoctorTypeEnum";
 
 export const doctorsStatisticsPerCountry = async (): Promise<Country[]> => {
   try {
@@ -65,15 +66,27 @@ export interface SpecialityDistribution {
   count: number;
 }
 
+interface SpecialityStatItem {
+  speciality: { id: number; name: string };
+  doctorsCount: number;
+}
+
 export const getDoctorsSpecialityDistribution = async (
-  specialities: string[],
-  _countries: string[],
-  _degrees: string[],
+  specialityIds: number[],
+  countries: string[],
+  types: DoctorTypeEnum[],
 ): Promise<SpecialityDistribution[]> => {
-  // Mocked response
-  const mockCounts = [312, 487, 253, 178, 421, 356, 289, 134, 502, 267];
-  return specialities.map((s, i) => ({
-    speciality: s,
-    count: mockCounts[i % mockCounts.length],
+  const body: Record<string, unknown> = {};
+  if (specialityIds.length) body.specialitiesIds = specialityIds;
+  if (countries.length) body.countries = countries;
+  if (types.length) body.types = types;
+
+  const response: SpecialityStatItem[] = await callApi(
+    endPoints.doctorsStatisticsPerSpeciality,
+    { data: body },
+  );
+  return response.map((item) => ({
+    speciality: item.speciality.name,
+    count: item.doctorsCount,
   }));
 };

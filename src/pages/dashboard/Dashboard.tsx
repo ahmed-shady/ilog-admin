@@ -16,7 +16,7 @@ import selectStyle from "@app/pages/doctors/util/SelectStyle";
 import { useTranslation } from "react-i18next";
 import DoctorTypeEnum from "@app/types/DoctorTypeEnum";
 
-interface DegreeOption {
+interface TypeOption {
   value: DoctorTypeEnum;
   label: string;
 }
@@ -33,7 +33,7 @@ const Dashboard = () => {
   const [allCountries, setAllCountries] = useState<Country[]>([]);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
 
-  const [selectedDegrees, setSelectedDegrees] = useState<DegreeOption[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<TypeOption[]>([]);
 
   const filterByName = (inputValue: string, data: { name: string }[]) => {
     if (!inputValue) return data;
@@ -71,7 +71,7 @@ const Dashboard = () => {
     [allCountries],
   );
 
-  const degreeOptions: DegreeOption[] = Object.values(DoctorTypeEnum).map(
+  const typeOptions: TypeOption[] = Object.values(DoctorTypeEnum).map(
     (type) => ({
       value: type,
       label: t(`doctors.types.${type.toLowerCase()}`),
@@ -235,17 +235,17 @@ const Dashboard = () => {
                 </Col>
                 <Col md={4}>
                   <label className="form-label fw-semibold">
-                    <i className="fas fa-user-md me-1 text-success"></i>
-                    Degree
+                    <i className="fas fa-user-md me-1 text-info"></i>
+                    Type
                   </label>
                   <Select
-                    placeholder="Select degrees..."
+                    placeholder="Select Type..."
                     isMulti
-                    options={degreeOptions}
-                    value={selectedDegrees}
+                    options={typeOptions}
+                    value={selectedTypes}
                     styles={selectStyle}
                     onChange={(val) =>
-                      setSelectedDegrees((val as DegreeOption[]) ?? [])
+                      setSelectedTypes((val as TypeOption[]) ?? [])
                     }
                   />
                 </Col>
@@ -253,7 +253,7 @@ const Dashboard = () => {
               <DoctorsSpecialityChart
                 selectedSpecialities={selectedSpecialities}
                 selectedCountries={selectedCountries}
-                selectedDegrees={selectedDegrees.map((d) => d.value)}
+                selectedDegrees={selectedTypes.map((t) => t.value)}
               />
             </Card.Body>
           </Card>

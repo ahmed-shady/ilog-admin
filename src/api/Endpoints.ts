@@ -336,6 +336,16 @@ const endPoints: Record<string, EndpointConfig> = {
       defaultMessage: "Failed to fetch doctors age distribution",
     },
   },
+  doctorsStatisticsPerSpeciality: {
+    url: `/statistics/per-speciality`,
+    method: "POST",
+    requireBody: true,
+    public: false,
+    error: {
+      toast: true,
+      defaultMessage: "Failed to fetch doctors statistics per speciality",
+    },
+  },
   getContactusMessages: {
     url: `/contactus`,
     method: "GET",
